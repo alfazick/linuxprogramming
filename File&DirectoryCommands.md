@@ -79,3 +79,31 @@ touch empty.txt
 echo -e "Word1 Word2" > count.txt
 wc count.txt
 ```
+
+## 3. Real-world Scenarios
+
+### 3.1 Project Files Organization
+```bash
+mkdir ProjectDocs Images Code
+mv *.txt ProjectDocs/
+mv *.jpg Images/
+mv *.py Code/
+```
+
+### 3.2 System Log Monitoring
+```bash
+tail -n 20 /var/log/syslog
+head /var/log/syslog
+ln -s /var/log/syslog ~/syslog_link
+```
+
+### 3.3 Weekly Report Generation
+```bash
+mkdir $(date '+%Y-%m-%d')
+mv report.txt $(date '+%Y-%m-%d')/
+ln -s $(pwd)/$(date '+%Y-%m-%d')/report.txt ~/report_link.txt
+```
+
+## Conclusion
+You're now equipped with foundational UNIX commands. Experiment with them and always be cautious, especially with commands like rm.
+
