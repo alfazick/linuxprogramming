@@ -1,3 +1,4 @@
+
 # Azure Lab Services Setup Guide
 
 This guide outlines the process to set up Azure Lab Services with Linux VMs.
