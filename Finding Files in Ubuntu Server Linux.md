@@ -1,5 +1,5 @@
 # Lesson: Finding Files in Ubuntu Server Linux
-**Duration**: 1 hour
+
 
 ## 1. Introduction
 Searching for files effectively on a Linux system is a vital skill for any user, especially for system administrators and developers. Being able to pinpoint files based on various criteria can save a lot of time and hassle. In this lesson, we'll delve deep into two primary tools in Ubuntu Server Linux: `find` and `locate`.
