@@ -1,3 +1,4 @@
+
 # Lesson: Mastering the `sed` Command for Developers
 
 **Duration**: 1.5 hours
