@@ -16,15 +16,16 @@
 With `grep`, developers can sift through codebases, logs, and data to pinpoint specific lines of interest.
 
 **Command**:
-\```bash
+
+```bash
 $ grep "function" script.js
-\```
+```
 
 **Output**:
-\```
+```
 function processData(input) {
 function calculateTotal(data) {
-\```
+```
 
 **Explanation**: This command finds all lines in `script.js` containing the term "function".
 
@@ -35,47 +36,47 @@ function calculateTotal(data) {
 ### a. Common Options and Their Uses
 
 - **-i**: Ignore case. 
-  \```bash
+  ```bash
   $ grep -i "VariableName" file.py
-  \```
+  ```
   Matches "variableName", "VARIABLENAME", etc.
 
 - **-v**: Invert match. 
-  \```bash
+  ```bash
   $ grep -v "console.log" app.js
-  \```
+  ```
   Filters out lines containing debugging `console.log` statements.
 
 - **-n**: Print line number. 
-  \```bash
+  ```bash
   $ grep -n "TODO" main.c
-  \```
+  ```
   Helps locate "TODO" comments in the code.
 
 - **-H**: Print filename (especially useful for multi-file searches).
-  \```bash
+  ```bash
   $ grep -H "API_KEY" *
-  \```
+  ```
 
 - **-r**: Recurse through subdirectories.
-  \```bash
+  ```bash
   $ grep -r "deprecatedFunction" /path/to/project/
-  \```
+  ```
 
 - **-l**: List filenames containing matches.
-  \```bash
+  ```bash
   $ grep -l "fixme" *
-  \```
+  ```
 
 - **-c**: Count matching lines.
-  \```bash
+  ```bash
   $ grep -c "error" log.txt
-  \```
+  ```
 
 - **-e**: Specify multiple patterns.
-  \```bash
+  ```bash
   $ grep -e "function" -e "class" script.js
-  \```
+  ```
 
 ---
 
@@ -84,30 +85,30 @@ function calculateTotal(data) {
 ### a. Debugging
 
 Identify all debugging statements in a JavaScript file.
-\```bash
+```bash
 $ grep "console.log" debug.js
-\```
+```
 
 ### b. Code Review
 
 Find all "TODO" or "FIXME" comments in a codebase, indicating areas needing attention.
-\```bash
+```bash
 $ grep -r -n "TODO" ~/project/
-\```
+```
 
 ### c. Configuration and Security
 
 Search for hard-coded API keys or tokens that shouldn't be in the codebase.
-\```bash
+```bash
 $ grep -r "API_KEY" /path/to/project/
-\```
+```
 
 ### d. Data Analysis
 
 Filter specific data points or events from large log files or datasets.
-\```bash
+```bash
 $ grep "user_login_event" events.log
-\```
+```
 
 ---
 
