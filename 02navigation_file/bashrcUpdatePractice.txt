@@ -28,6 +28,8 @@ https://github.com/webpro/dotfiles
 Dotfiles GitHub Community
 https://github.com/webpro/awesome-dotfiles
 
+Jess Fraz
+https://github.com/jessfraz/dotfiles
 
 As a practice we do next 
 https://github.com/jessfraz/dotfiles/blob/master/.bash_prompt
