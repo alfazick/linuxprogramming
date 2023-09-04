@@ -1,0 +1,123 @@
+# Warmp UP 
+
+
+# Assignment: Create a Simple File and Folder Structure and Verify Using tree
+
+Objectives
+Create a directory structure that includes a couple of sub-directories.
+Create some files within these directories.
+Use the tree command to verify your work.
+Steps
+
+Open a terminal.
+
+Create a root directory for your assignment and navigate into it:
+mkdir AssignmentRoot
+cd AssignmentRoot
+
+Create two sub-directories within AssignmentRoot:
+mkdir SubDir1 SubDir2
+
+Navigate into SubDir1 and create a file:
+cd SubDir1
+touch file1.txt
+cd ..
+
+Navigate into SubDir2 and create another file:
+
+cd SubDir2
+touch file2.txt
+cd ..
+
+
+Display the tree structure listing of AssignmentRoot and its contents:
+
+tree AssignmentRoot
+
+Note: If the tree command is not installed, you can install it using:
+
+sudo apt install tree
+
+The tree command will display a hierarchical structure of directories and files, giving you a clear view of the structure you've just created.
+
+After completing these steps, you should see an output that confirms you've created AssignmentRoot, with two sub-directories SubDir1 and SubDir2, each containing a text file (file1.txt and file2.txt, respectively). This verifies that you've correctly followed the assignment steps.
+
+
+If you don't want to install tree, you can use the built-in find command to display the directory structure, although it won't be as neatly formatted as with tree.
+
+From within the AssignmentRoot directory, you can use:
+
+find .
+
+This will list all files and directories under the current directory, which in this case is AssignmentRoot.
+
+Assignment 1: Set Up a Basic Programming Project
+Objective:
+Create a basic project directory structure.
+Folder and File Structure:
+
+MyProject1/
+│
+├── Images/
+│   ├── logo.png
+│   └── banner.png
+│
+├── Code/
+│   ├── main.py
+│   └── utils.py
+│
+└── Configs/
+    └── settings.conf
+
+
+Assignment 2: Hidden Files in Project
+Objective:
+Introduce hidden configuration files to your project structure.
+Folder and File Structure:
+
+
+MyProject2/
+│
+├── Images/
+│
+├── Code/
+│
+├── Configs/
+│   └── .secret_key
+│
+├── .config
+│
+└── .database_connection
+
+
+Assignment 3: Simulate a Git-Initialized Project
+Objective:
+Mimic a programming project directory that uses Git for version control.
+Folder and File Structure:
+
+MyProject3/
+│
+├── Images/
+│
+├── Code/
+│
+├── Configs/
+│
+└── .git/
+    ├── config
+    ├── HEAD
+    ├── description
+    ├── hooks/
+    ├── info/
+    ├── objects/
+    └── refs/
+
+
+The tree or find commands 
+can be used to verify the structure after executing the solution commands for each assignment.
+
+Command to show hidden files using tree:
+
+tree -a
+
+So, with the -a flag, tree will list all files, including the hidden ones.

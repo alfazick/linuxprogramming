@@ -1,0 +1,62 @@
+# Basic Navigation Commands
+
+=> pwd: Print Working Directory
+Shows the full pathname of the current working directory.
+pwd
+
+=> ls: List
+Lists all the files and directories in the current directory.
+ls
+
+Can be used with various options, 
+like ls -l for a long format listing, 
+ls -a to see hidden files.
+
+=> cd: Change Directory
+
+Changes the current directory to the one specified in the arguments.
+cd /path/to/directory
+
+Without arguments, cd typically takes you to the home directory.
+cd .. moves up one directory.
+
+=> mkdir: Make Directory
+
+Creates a new directory.
+mkdir new_directory
+
+=> rmdir: Remove Directory
+Removes an empty directory.
+
+rmdir directory_name
+
+# File Manipulation Commands
+=> touch: Create File
+
+=> touch: Creates a new empty file.
+touch new_file.txt
+
+=> rm: Remove File
+Deletes a file. Use cautiously.
+rm file_name
+
+=> cp: Copy
+Copies files or directories.
+
+cp source destination
+
+=> mv: Move
+
+Moves files or directories, can also be used to rename files.
+mv old_name new_name
+
+
+Most famous command, because joke says: go to read manual page
+=> man: Manual
+Displays the user manual for the specified command.
+
+man command_name
+
+These commands offer the basic functionalities you'd need to navigate and manipulate a Linux filesystem. 
+They are the building blocks for many more complex operations and scripts.
+

@@ -1,0 +1,94 @@
+
+# Dotfile movement :)
+
+So as you notice, default console sometimes not so friendly per say,
+so since there are no really graphical interfaces, people start to experiment with appearance
+of console.
+
+If you watched some videos or movies, you may notice that it looks really cool sometimes.
+So the since you don't have a GUI, there is only one way to change settings of something, only through text
+and, that's exactly we are going to do.
+
+Luckily for us there are many enthusiast who kindly shares their so called dotfiles
+Or files for changing settings of programs, through direct text manipulation 
+
+Examples:
+Mathias Bynens
+https://github.com/mathiasbynens/dotfiles
+
+Zach Holman
+https://github.com/holman/dotfiles
+
+Nick Nisi
+https://github.com/nicknisi/dotfiles
+
+Webpro's Dotfiles for macOS
+https://github.com/webpro/dotfiles
+
+Dotfiles GitHub Community
+https://github.com/webpro/awesome-dotfiles
+
+
+As a practice we do next 
+https://github.com/jessfraz/dotfiles/blob/master/.bash_prompt
+
+Setting $TERM based on terminal capabilities: 
+This can help ensure that you have the best color experience and terminal compatibility.
+
+Git Prompt Customization: 
+The prompt_git function is used to modify your prompt based on the state 
+of a Git repository (if you are in one). It shows branch names, and 
+indicates uncommitted changes, unstaged changes, 
+untracked files, and stashed files with special symbols.
+
+Cloud Detection: Checks if you're in a virtualized environment (e.g., cloud server) 
+and adds a cloud icon if so.
+
+Color Customization: 
+Uses tput if available (preferred for portability and capability detection) 
+or ANSI escape codes to set various colors. 
+It also sets specific colors based on conditions 
+(e.g., highlighting the username if logged in as root).
+
+Customizing Prompt ($PS1): 
+This is the main part where all the previous elements are combined 
+to create a visually pleasing and informative prompt. 
+It shows user, host, working directory, and Git status in various colors and formats.
+
+Setting the secondary prompt ($PS2): 
+This is what you see when a command is continued on the next line, 
+and it's set to a simple arrow.
+
+
+# curl is a versatile command-line tool used for transferring data with URLs.
+One common use case is downloading files from the internet.
+
+curl https://raw.githubusercontent.com/jessfraz/dotfiles/master/.bash_prompt > bash_experiment.txt
+
+Before adding this to your .bashrc, consider the following steps:
+
+Backup: Always backup your existing .bashrc file.
+
+cp ~/.bashrc ~/.bashrc.backup
+
+
+Modify using nano: 
+You can append this script to the end of your .bashrc 
+nano ~/.bashrc
+
+Test: Open a new terminal or source your .bashrc:
+
+source ~/.bashrc
+This will apply the changes. Make sure everything looks and works as expected.
+
+Personalize: Feel free to tweak any part of this to fit your personal preferences. Remember that customization is all about making your environment work best for you.
+
+
+# Assignment
+
+# Add time to your prompt
+get_current_time() {
+    echo $(date +"%d-%m-%Y %H:%M:%S")
+}
+
+PS1+="\\[$white\\][\$(get_current_time)] ";

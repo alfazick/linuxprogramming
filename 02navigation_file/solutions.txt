@@ -1,0 +1,31 @@
+Solutions Navigation and File Manipulation:
+
+Assignment 1 Solution:
+
+mkdir MyProject
+cd MyProject
+mkdir Images Code Configs
+cd Images
+touch logo.png banner.png
+cd ..
+cd Code
+touch main.py utils.py
+cd ..
+cd Configs
+touch settings.conf
+
+
+Assignment 2 Solution:
+
+cd MyProject
+touch .config .database_connection
+cd Configs
+touch .secret_key
+
+
+Assignment 3 Solution:
+cd MyProject
+mkdir .git
+cd .git
+touch config HEAD description
+mkdir hooks info objects refs
