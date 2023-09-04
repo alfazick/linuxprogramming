@@ -2,6 +2,6 @@
 
 # Instructions 
 
-**01 Developer Basics -> Not ready**
+**01 Developer Basics -> Not ready. Prerequistes not covered**
 
 **02 Navigation -> Ready**
