@@ -1,0 +1,285 @@
+
+# SECTION 1: Basic Text Manipulation Commands(aka c program)
+
+Focus on Commands only
+
+a) cat: Used to concatenate and display the content of files.
+
+# Display content of 'hello.txt'
+cat hello.txt
+
+# Number all lines in 'lines.txt'
+cat -n lines.txt
+
+
+
+b) echo: Display a message or output data to the terminal.
+
+# Display a test message
+echo "This is a test."
+
+c) 
+wc: Used to count words, lines, characters, and bytes.
+
+-l: Count the number of lines.
+-w: Count the number of words.
+-m: Count the number of characters.
+-c: Count the number of bytes.
+
+
+# Count lines in 'lines.txt'
+wc -l lines.txt
+
+# Count words in 'lines.txt'
+wc -w lines.txt
+
+# Count characters in 'lines.txt'
+wc -m lines.txt
+
+# Count bytes in 'lines.txt'
+wc -c lines.txt
+
+d) sort: Arrange lines of text files in specific orders (alphabetically by default).
+
+# Sort names in 'names.txt'
+sort names.txt
+
+e) grep: Search for specific patterns in files.
+
+# Search for "ERROR" messages in 'log.txt'
+grep "ERROR" log.txt
+
+
+f) head: Display the beginning of a file. By default, it shows the first 10 lines.
+
+# Display first 3 lines of 'lines.txt'
+head -n 3 lines.txt
+Output:
+
+g) tail: Display the end of a file. By default, it shows the last 10 lines.
+
+# Display last 2 lines of 'lines.txt'
+tail -n 2 lines.txt
+
+With these basic commands, you have the ability to perform a wide range 
+of operations on text files in Linux. 
+
+# Section 2: Idea of Pipes and Redirection. Time to awaken Sharingan :)
+
+Ok I believe at this time you can start to feel boring, 
+It's time to introduce mechanism which brings power.
+Namely Pipes and Redirection.
+
+Mosy of the useful things you can accomplish in Linux, one way or another
+most likely involve on of these patterns.
+
+Pipes and redirection are fundamental concepts in Unix and Unix-like operating systems, 
+and they're representative of the OS's philosophy of "everything is a file." 
+
+
+a) Pipes (|)
+A pipe, symbolized as |, is a mechanism for inter-process communication. 
+It allows the output of one process to be used as the input of another.
+
+Operating System Perspective:
+
+Pipes are an example of a mechanism for Inter-Process Communication (IPC).
+A pipe creates a linear communication channel between processes, 
+often termed as a "half-duplex" channel, because data flows only in one direction.
+
+Data written by the sending process can be read by the receiving process. 
+This is usually done in a buffered manner, which means data is stored 
+in a temporary area (buffer) before it's sent to the receiving process.
+
+Practical Example:
+
+If you want to search for a specific word in a file and then count its occurrences, 
+you might use grep to find the word and wc to count its occurrences, 
+combined with a pipe:
+
+cat filename.txt | grep "specific-word" | wc -l
+
+Here, cat outputs the content of the file. 
+grep takes this output to find lines containing "specific-word" 
+and wc counts these lines.
+
+b) Redirection (>, >>, <)
+
+Redirection allows you to direct the input and output streams of a process 
+to a file or from a file.
+
+Operating System Perspective:
+
+The OS assigns every process a table of file descriptors. 
+The first three are standard:
+0: standard input (stdin)
+1: standard output (stdout)
+2: standard error (stderr).
+
+Redirection works by changing the file descriptor table of a process. 
+Instead of pointing to the default locations (e.g., the terminal), 
+they're changed to point to a file.
+
+Examples:
+
+Output Redirection (> and >>):
+
+>: Redirects the output of a command to a file. If the file exists, it's overwritten. If it doesn't, it's created.
+
+echo "Hello, World!" > output.txt
+
+
+>>: Appends the output of a command to a file. If the file doesn't exist, it's created.
+
+echo "Hello again!" >> output.txt
+
+Input Redirection (<):
+
+Directs the input for a process from a file instead of from the standard input 
+(typically the keyboard).
+
+sort < input.txt
+Here, sort reads its input from input.txt rather than the terminal.
+
+
+This model allows small utilities to be combined.
+
+A bit advanced : go slowly.
+
+OK to deeply understand Pipes and Redirection, we need to go through code demonstration first 
+file_descriptor.py
+explanationfiledescriptor.txt
+
+
+Foundational principles of pipes and redirections from an operating system perspective:
+
+1) Pipes
+Pipes are an embodiment of the producer-consumer problem in computer science. 
+The producer generates data and the consumer uses it, 
+without both needing to operate at the same speed or time. 
+This decoupling is vital for multi-process and multi-threaded operations.
+
+Kernel's Role:
+
+a) Buffered Communication: 
+The OS kernel provides a buffer (typically of a fixed size, like 4KB in many systems) for the pipe.
+When one process writes to the pipe, the data goes to this buffer and stays there until 
+another process reads it.
+
+b) Synchronization and Blocking: If a process tries to read from an empty buffer, 
+it will block (i.e., sleep) until there's something to read. 
+Conversely, if a process tries to write to a full buffer, 
+it will block until some data has been read, making space available.
+
+c) Anonymous Pipes: The classic pipes (using | in shell) are anonymous; 
+they exist transiently and don't have a presence in the filesystem. 
+
+2) Redirection
+
+Redirection capitalizes on the UNIX philosophy that "everything is a file." 
+This concept abstracts over different I/O operations to provide a consistent interface, 
+whether it's a hardware device, regular file, or an inter-process communication mechanism.
+
+a) File Descriptors:
+Every open file or I/O stream is associated with 
+a file descriptor (FD), a non-negative integer. By default:
+
+0 is the standard input (stdin)
+1 is the standard output (stdout)
+2 is the standard error (stderr)
+
+Key idea: When you redirect, you're telling the shell to change these default assignments.
+
+b) Output Redirection: 
+Commands like > and >> affect where the stdout (file descriptor 1) points. 
+Instead of pointing to the terminal, it's changed to point to a file.
+
+For instance, when you do echo "Hello" > file.txt, the shell performs these steps:
+
+1) Open file.txt for Writing: 
+When you use the > redirection operator followed by a filename (file.txt in this case), 
+the shell opens that file for writing. This action returns a new file descriptor 
+(let's call it FDn, where n is the actual descriptor number).
+
+2) Duplicate FDn onto stdout (FD 1): This step is crucial. 
+The shell uses a system call (typically dup2() in Unix-like systems) to make 
+the stdout (FD 1) refer to the same file entry as FDn. 
+At this moment, anything written to stdout will go to file.txt. 
+But it's just a temporary reassignment.
+
+3) Execute the Command: 
+The echo command is executed. echo writes to stdout as it normally does, 
+but because of the duplication, its output goes to file.txt instead of the terminal.
+
+4) Restore Original stdout: 
+After the command completes, the shell restores the original stdout 
+(FD 1) back to its initial setting, which is typically the terminal. 
+Any subsequent commands will output to the terminal as usual unless redirected again.
+
+
+c) Input Redirection: 
+Using < changes where stdin (file descriptor 0) reads from. 
+For instance, with sort < input.txt, stdin is reading from input.txt instead of the terminal.
+
+A Bit on the Kernel and Syscalls:
+Most of the magic behind pipes and redirection is facilitated by 
+system calls (syscalls) provided by the kernel. 
+
+Key syscalls include:
+
+pipe(): Creates a pair of file descriptors, one for reading and one for writing, to set up a pipe.
+
+dup() and dup2(): Duplicate file descriptors, used heavily in redirection.
+
+read() and write(): For reading from and writing to file descriptors.
+
+Processes don't directly interact with hardware or the underlying file systems. 
+Instead, they request the kernel to perform these tasks through syscalls. 
+The kernel manages resources, permissions, and the nitty-gritty details, 
+ensuring security, efficiency, and abstraction.
+
+This is a deeper dive, but keep in mind that entire books 
+have been written on UNIX and Linux system design, 
+so this is still a high-level overview in comparison to the full depth of the subject!
+
+Resume:
+both redirection and pipes in the Linux/Unix shell operate using the concept of file descriptors.
+
+Redirection:
+
+When you use redirection (>, >>, <), you're essentially manipulating where the standard file descriptors 
+(stdin, stdout, stderr, represented by FD 0, 1, and 2 respectively) point.
+
+For instance:
+
+command > file.txt redirects the stdout (FD 1) of command to file.txt.
+command 2> error.txt redirects the stderr (FD 2) to error.txt.
+command < input.txt redirects the stdin (FD 0) of command to take input from input.txt.
+
+Under the hood, the shell does this by creating new file descriptors for the specified files and 
+then making the standard descriptors point to these new file locations.
+
+Pipes:
+
+Pipes (|) also utilize file descriptors. When you pipe the output of one command into another 
+(command1 | command2), you're connecting the stdout of command1 to the stdin of command2.
+
+Technically, the shell creates a pipe (which has two ends: a write-end and a read-end) when you use 
+the | symbol. The stdout of command1 is connected to the write-end of the pipe, and the stdin of 
+command2 is connected to the read-end of the pipe. 
+Hence, data flows from the stdout of the first command to the stdin of the second.
+
+So, in essence, both redirection and pipes are mechanisms to control where data flows between 
+processes and files by manipulating file descriptors.
+
+That's it. now you have awekend Sharingan :)
+
+Time to move to assignments.
+
+
+
+
+
+
+
+

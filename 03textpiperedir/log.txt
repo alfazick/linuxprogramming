@@ -1,0 +1,5 @@
+INFO: User logged in
+DEBUG: Memory usage low
+ERROR: File not found
+INFO: Connection established
+ERROR: Permission denied

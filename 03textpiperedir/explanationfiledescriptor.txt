@@ -1,0 +1,39 @@
+Let's use Linux pipes and redirection to demonstrate the interplay 
+between stdin, stdout, and stderr with the Python script provided.
+
+First, here's a quick refresher on the script. The script does the following:
+
+Writes "Hello, File Descriptors!" to a file.
+Reads the file content and prints it to stdout.
+Prints an error message to stderr.
+Prompts the user for input and prints it to stdout.
+
+Here's how we can use Linux pipes and redirection with this script:
+
+1) Redirect stdout to a File and Display stderr:
+
+python3 file_descriptor.py > output.txt
+This will write the results of stdout (the file content and user input) to output.txt. 
+The error message will still be displayed in the terminal because we haven't redirected stderr.
+
+2) Redirect Both stdout and stderr to Separate Files:
+
+python3 file_descriptor.py > output.txt 2> error.txt
+Here, stdout is redirected to output.txt and stderr is redirected to error.txt.
+
+3) Provide Input Using a Pipe:
+Let's assume you have a file called input.txt with some text. 
+You can pipe this content to the script as follows:
+
+cat input.txt | python3 file_descriptor.py > output.txt 2> error.txt
+This will use the content of input.txt as the input for the script when it prompts the user.
+
+
+4) Use the Content from stdout as Input for Another Command:
+
+For instance, let's take the content read from the file (displayed in stdout) and 
+pipe it to grep to search for a specific word:
+
+python3 file_descriptor.py 2> error.txt | grep "File"
+
+This will display lines containing the word "File" from the stdout of the script.
