@@ -1,0 +1,80 @@
+First execute python script which will generate a psedo log with 1000 entries 
+
+python3 log_generator.py 
+
+Output: you should have application.log
+
+Try to examine it with cat head or tail commmands
+
+head -n 10 application.log
+
+Assignment #1: Log Analysis
+
+Scenario:
+After launching your new web application, users start reporting various issues. 
+Some complain about performance issues, while others are encountering errors. 
+To diagnose and prioritize the problems, you decide to analyze the application 
+logs using different log levels.
+
+Tasks:
+
+INFO Analysis:
+
+Extract all lines with the "INFO" log level from application.log.
+Count the total number of "INFO" messages.
+Save these messages to a file named info_logs.txt.
+
+grep "INFO" application.log > info_logs.txt
+cat info_logs.txt | wc -l
+
+WARNING Analysis:
+
+Extract all lines with the "WARNING" log level from application.log.
+Count the total number of "WARNING" messages.
+Save these messages to a file named warning_logs.txt.
+
+grep "WARNING" application.log > warning_logs.txt
+cat warning_logs.txt | wc -l
+
+ERROR Analysis:
+
+Extract all lines with the "ERROR" log level from application.log.
+Count the total number of "ERROR" messages.
+Sort the unique error messages.
+Save these sorted unique messages to a file named sorted_errors.txt.
+Display the first 10 unique error messages.
+
+
+grep "ERROR" application.log | sort | uniq > sorted_errors.txt
+head -n 10 sorted_errors.txt
+
+DEBUG Analysis:
+
+Extract all lines with the "DEBUG" log level from application.log.
+Count the total number of "DEBUG" messages.
+Save these messages to a file named debug_logs.txt.
+
+
+grep "DEBUG" application.log > debug_logs.txt
+cat debug_logs.txt | wc -l
+
+Advanced Scenario:
+
+Top 5 Recurring Errors:
+
+Identify the five most frequently occurring error messages.
+Save these frequent errors with their occurrence counts to a file named top_errors.txt.
+Commands to use:
+
+grep "ERROR" application.log | sort | uniq -c | sort -nr | head -n 5 > top_errors.txt
+
+
+INFO vs. ERROR:
+Compare the number of "INFO" messages with "ERROR" messages.
+Which type of log message is more frequent?
+Commands to use:
+
+grep -c "INFO" application.log
+grep -c "ERROR" application.log
+
+
