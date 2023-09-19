@@ -1,0 +1,124 @@
+In Linux and other Unix-like operating systems, the permission and access rights
+system is a crucial security feature that controls the level of access/interaction 
+users and processes can have with files and directories.
+
+Types of Permissions
+Linux systems have three basic types of permissions:
+
+=> Read (r):
+
+Files: Allows a user to read the contents of a file.
+Directories: Allows a user to list the files in the directory.
+
+=> Write (w):
+
+Files: Allows a user to modify a file or delete it.
+Directories: Allows a user to create new files or delete files in the directory.
+
+=> Execute (x):
+
+Files: Allows a user to execute a file.
+Directories: Allows a user to enter the directory and access files and directories inside.
+
+=> Permission Groups
+Permissions are defined for three groups:
+User (u): The owner of the file/directory.
+Group (g): Users who are members of the file's group.
+Others (o): Users who are neither the file owner nor members of the file's group.
+
+
+=> Viewing Permissions
+
+To view the permissions of a file or directory, use the ls -l command. 
+The permission field will look something like this:
+
+-rwxr-xr--
+
+or for full picture
+stat: To display file or directory permissions.
+
+The first character indicates the type of file (- for a regular file, d for a directory).
+The next three characters represent the user permissions (rwx).
+The next three represent the group permissions (r-x).
+The last three represent the permissions for others (r--).
+
+=> Modifying Permissions
+To modify the permissions of a file or directory, use the chmod command.
+
+Here are some examples:
+Adding permissions:
+chmod u+x filename # Add execute permission for the user
+chmod g+w filename # Add write permission for the group
+
+=> Removing permissions:
+chmod o-r filename # Remove read permission for others
+
+=> Setting permissions:
+
+chmod u=rwx,g=rx,o=r filename # Set permissions explicitly for user, group, and others
+
+
+
+=> Using numerical notation:
+
+chmod 755 filename # Equivalent to u=rwx,g=rx,o=rx
+
+Extra theory:
+In Linux, numerical notations for file permissions are derived from 
+the binary representation of the permissions for the user, group, and others. 
+Each of these entities can have a permission value between 0 and 7, 
+represented as a three-bit binary number. 
+Here is the full breakdown of the numerical notations, 
+which are the sum of read (r; 4), write (w; 2), and execute (x; 1) permissions:
+
+Octal Value | 	Binary Representation |	Permission (rwx notation)
+0	000	---
+1	001	--x
+2	010	-w-
+3	011	-wx
+4	100	r--
+5	101	r-x
+6	110	rw-
+7	111	rwx
+
+Using this chart, we can understand how the numerical notation for chmod works.
+For instance:
+
+chmod 755 filename
+7 (user): rwx (read, write, and execute permissions)
+5 (group): r-x (read and execute permissions)
+5 (others): r-x (read and execute permissions)
+
+More examples:
+
+chmod 644 filename
+6 (user): rw- (read and write permissions)
+4 (group): r-- (read permission)
+4 (others): r-- (read permission)
+
+chmod 777 filename
+7 (user): rwx (read, write, and execute permissions)
+7 (group): rwx (read, write, and execute permissions)
+7 (others): rwx (read, write, and execute permissions)
+
+chmod 000 filename
+0 (user): --- (no permissions)
+0 (group): --- (no permissions)
+0 (others): --- (no permissions)
+
+
+
+=> Ownership
+To change the ownership of a file or directory, use the chown command. 
+Here are some examples:
+
+chown newowner filename
+
+Changing the group:
+chown :newgroup filename
+
+Changing both owner and group:
+chown newowner:newgroup filename
+
+First lab: Creating a new user and groups
+Second lab: Manipulating file permissions

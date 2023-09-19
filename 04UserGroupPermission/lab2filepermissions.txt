@@ -1,0 +1,80 @@
+Lab2: Setting File Permissions
+
+Step 1: Create Another User
+Open the terminal and create a new user, 
+for instance, dev_bob, but do not assign him to any group:
+
+$ sudo useradd -m dev_bob
+
+
+Set a password for dev_bob:
+$ sudo passwd dev_bob
+
+Step 2: Log In as dev_alex and Create a Python Script
+
+Switch to the dev_alex user:
+$ su - dev_alex
+
+Create a Python script called hello.py using a text editor. Here, we'll use nano:
+
+$ nano hello.py
+
+print("Hello, dev_team!")
+
+Save and exit the editor (for nano: Ctrl+O to write changes, Ctrl+X to exit).
+
+Step 3: Change File Permissions
+Set the file permissions so that only users in the dev_team group can execute the script. 
+First, change the group ownership of the file to dev_team:
+
+$ sudo chgrp dev_team hello.py
+
+Next, set the file permissions to allow execution by the group:
+
+$ chmod 770 hello.py
+
+Step 4: Verify the File Permissions
+Check the file permissions using the ls command:
+
+$ ls -l hello.py
+The output should indicate that the file owner and group members have read, write, and execute permissions, 
+while others have no permissions.
+
+Step 5: Test the File Execution
+First, try executing the script as dev_alex:
+
+$ python3 hello.py
+You should see the output: "Hello, dev_team!"
+
+Next, switch to the dev_bob user and try executing the script:
+
+$ su - dev_bob
+$ python3 /home/dev_alex/hello.py
+
+dev_bob should not have the permissions to execute the script, and you should see a permission denied error.
+
+Ok after a while Bob was promoted to become developer :)
+in the final step we will add dev_bob to the dev_team group and demonstrate that he can now execute the script.
+
+Step 6: Adding dev_bob to the dev_team Group
+Switch back to a user with sudo privileges and add dev_bob to the dev_team group:
+
+$ sudo usermod -aG dev_team dev_bob
+
+Step 7: Verify the Group Assignment for dev_bob
+Verify that dev_bob has been added to the dev_team group:
+
+$ groups dev_bob
+
+You should see dev_team in the list of groups for dev_bob.
+
+Step 8: Log In as dev_bob and Execute the Script
+Switch to the dev_bob user and execute the script:
+
+$ su - dev_bob
+Now, navigate to dev_alex's home directory and try running the script:
+
+$ python3 /home/dev_alex/hello.py
+
+This time, since dev_bob is a member of the dev_team group, 
+he should be able to execute the script, and you should see the "Hello, dev_team!" message output to the terminal.

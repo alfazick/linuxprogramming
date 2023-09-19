@@ -1,0 +1,105 @@
+How to Create Users and Groups in Linux
+
+Step 1: Open the Terminal
+Open your terminal. You'll perform all the actions in this guide from the terminal.
+
+Step 2: Creating a Group
+Before creating a user, you may want to create a group. 
+To create a group, use the groupadd command followed by the name of the group. 
+Here, we create a group called dev_team:
+
+$ sudo groupadd dev_team
+You can verify that the group has been created by checking the file /etc/group:
+
+$ grep dev_team /etc/group
+
+
+Step 3: Creating a User
+
+To create a user, use the useradd command followed by the username. 
+Here, we create a user called dev_alex:
+
+$ sudo useradd -m dev_alex
+The -m option creates a home directory for the user.
+
+
+Step 4: Setting a Password for the New User
+Set a password for the new user using the passwd command:
+
+$ sudo passwd dev_alex
+You will be prompted to enter and confirm a password for the user. Don't forget it.
+
+Step 5: Adding the User to a Group
+
+To add the user to the group you created earlier, use the usermod command:
+$ sudo usermod -aG dev_team dev_alex
+
+The -aG option appends the user to the supplementary groups mentioned.
+
+Step 6: Verify User and Group Assignment
+Verify the user's details with the id command:
+$ id dev_alex
+
+The output will display the user's UID, GID, and the groups the user belongs to, 
+confirming that the user has been added to the dev_team group.
+
+Step 7: Switching to the New User
+To switch to the new user's environment, use the su command:
+
+$ su - dev_alex
+
+You can then verify that you are logged 
+in as dev_alex using:
+
+$ whoami
+
+#Before deleting make sure to finish lab2.
+
+Step 8: Deleting Users and Groups
+If necessary, users can be deleted with the userdel command, 
+and groups can be deleted with the groupdel command:
+
+$ sudo userdel dev_alex
+$ sudo groupdel dev_team
+
+Note: Be cautious when deleting users and groups, 
+as this action can result in loss of data and system instability.
+
+Conclusion
+Now you know how to create, modify, and delete users and groups in Linux. 
+It's always recommended to perform such actions with care to maintain system security 
+and integrity. Practice these operations to get comfortable with 
+user and group management in Linux. 
+
+Once you feel ready, you can proceed with more advanced tasks like 
+configuring file permissions and ownership.
+
+P.S 
+To list all users and groups on a Linux system.
+
+
+Listing All Users
+
+Using getent command:
+$ getent passwd
+
+Listing All Groups
+Using getent command:
+$ getent group
+
+
+
+Notes:
+
+/etc/passwd file: 
+This file contains information about the users on the system. 
+Each line in this file represents login information for one user.
+
+/etc/group file: 
+This file contains information about groups on the system. 
+Each line in this file represents one group.
+
+getent command: This command is used to get entries from Name Service Switch libraries, 
+and it can be used to fetch details from passwd and group databases 
+which read from /etc/passwd and /etc/group respectively, 
+as well as other databases configured in the /etc/nsswitch.conf file.

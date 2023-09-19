@@ -1,0 +1,31 @@
+Users and Groups
+
+Users: Individual user accounts that have specific privileges and permissions.
+Groups: Collections of users that share a common set of permissions.
+Superuser (root): The user with the highest level of permissions, 
+capable of performing any operation on the system.
+
+
+User Attributes
+UID (User ID): A unique identifier assigned to each user.
+GID (Group ID): A unique identifier assigned to each group.
+Home Directory: The personal workspace for each user to store their files and personal settings.
+
+
+User Management Commands
+
+useradd, userdel, usermod: Commands to add, delete, and modify user accounts, respectively.
+groupadd, groupdel, groupmod: Commands to add, delete, and modify groups, respectively.
+passwd: Command to change the password of a user account.
+
+
+Directory and File Ownership
+Ownership: Assigning ownership of files and directories to specific users or groups.
+chown and chgrp: Commands to change the ownership and group of files and directories, respectively.
+
+Extra Important command
+sudo: To temporarily grant administrative privileges to a regular user.
+su: To switch to another user account.
+last: To show the last logins in the system.
+sudo cat /home/user_name/.bash_history: You can see whatever user was doing.
+
