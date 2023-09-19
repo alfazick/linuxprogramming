@@ -1,0 +1,111 @@
+We need to create a 2 files server.py and client.py 
+
+server.py
+import socket
+from threading import Thread
+
+def handle_client(conn, addr):
+    while True:
+        # Receiving a message from the client
+        data = conn.recv(1024)
+        if not data:
+            break
+
+        print(f"Received message from {addr}: {data.decode('utf-8')}")
+        
+        # Sending a response to the client
+        conn.sendall(b'Received your message!')
+    
+    conn.close()
+    print(f"Connection with {addr} closed.")
+
+def socket_server():
+    # Creating a new socket object using IPv4 and TCP protocols
+    server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    
+    # Setting the SO_REUSEADDR option to allow the socket to be reused immediately
+    server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    
+    # Binding the socket to localhost on port 65432
+    server_socket.bind(('localhost', 65432))
+    
+    # Starting to listen for connections
+    server_socket.listen()
+    print("Server is listening...")
+
+    while True:
+        # Accepting a new connection
+        conn, addr = server_socket.accept()
+        print(f"Connected by {addr}")
+
+        # Sending a welcome message to the client
+        conn.sendall(b'Hello from the socket server!')
+
+        # Creating a new thread to handle the client
+        client_thread = Thread(target=handle_client, args=(conn, addr))
+        client_thread.start()
+
+# Start the socket server
+socket_server()
+
+
+client.py
+import socket
+
+def client_chat():
+    # Creating a new socket object using IPv4 and TCP protocols
+    client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    
+    # Connecting to the server at localhost on port 65432
+    client_socket.connect(('localhost', 65432))
+    
+    # Receiving a welcome message from the server
+    data = client_socket.recv(1024)
+    print(data.decode('utf-8'))
+
+    while True:
+        # Taking user input and sending it to the server
+        msg = input("You: ")
+        
+        # If the user types "exit", close the connection and exit the loop
+        if msg.lower() == "exit":
+            break
+        
+        # Send the user's message to the server
+        client_socket.sendall(msg.encode('utf-8'))
+
+        # Receiving a response from the server and printing it
+        data = client_socket.recv(1024)
+        print(f"Server: {data.decode('utf-8')}")
+
+    # Close the socket connection
+    client_socket.close()
+    print("Connection closed.")
+
+# Start the client chat
+client_chat()
+
+
+How to run the scripts:
+Save the server code in a file named server.py.
+
+Save the client code in a file named client.py.
+
+Open two terminal windows: one for the server and one for the client.
+
+In the server terminal, navigate to the directory where server.py is located and run the script with the command:
+
+
+python3 server.py
+In the client terminal, navigate to the directory where client.py is located and run the script with the command:
+
+python3 client.py
+You should see the welcome message from the server in the client terminal, and now you can start typing messages in the client terminal.
+
+Messages typed in the client terminal will be sent to the server and a response will be received and displayed.
+
+To exit the chat, type "exit" in the client terminal.
+
+That's it! Now you have a simple server-client chat system running on your local machine. 
+Just with Linux built-in sockets.
+

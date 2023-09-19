@@ -1,0 +1,47 @@
+=> Hard Links
+
+Explanation:
+Hard link is a reference or pointer to the physical data on the disk.
+When you create a hard link, it will point to the same inode as the original file, 
+essentially referring to the same physical location on the disk.
+Deleting the original file will not affect the hard link as they share the same inode.
+Hard links cannot cross different filesystems and cannot link to directories.
+
+Usage:
+To create a hard link, you can use the ln command as follows:
+
+ln source_file hard_link_name
+
+To check the inode number of files, you can use the ls command with -i option:
+ls -i source_file hard_link_name
+
+=> Soft Links (Symbolic Links)
+
+Explanation:
+Soft link, also known as a symbolic link, is a special kind of file that points to another file or directory.
+Soft links can cross file systems and can link to directories.
+
+If you delete the target file to which a soft link points, the soft link becomes broken, as it points to a non-existing file.
+
+Usage:
+To create a soft link, you use the ln command with the -s option:
+
+ln -s source_file soft_link_name
+
+To check if a file is a symbolic link and identify its target, you can use ls command with -l option:
+
+ls -l soft_link_name
+Examples:
+Let's assume we have a file named file1.txt and we wish to create hard and soft links to this file.
+
+Creating a hard link:
+ln file1.txt hard_link_to_file1.txt
+
+Creating a soft link:
+ln -s file1.txt soft_link_to_file1.txt
+
+Listing files and observing the links:
+
+ls -li
+You would see both hard_link_to_file1.txt and soft_link_to_file1.txt in the output, 
+alongside their inode numbers (for hard links) and target files (for soft links).

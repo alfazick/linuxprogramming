@@ -1,0 +1,8 @@
+{
+    "environment": "production",
+    "database": {
+      "host": "prod.mydatabase.com",
+      "port": 5432
+    }
+  }
+  

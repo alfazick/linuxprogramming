@@ -1,0 +1,84 @@
+Symbolic (Soft) Links
+A symbolic link, also known as a soft link, is a special kind of file that points to another file or directory. 
+It's essentially a shortcut to another file or directory. 
+If you delete the symbolic link, the original file remains unaffected. 
+If you delete the original file, the symbolic link will "break," as it points to a non-existent file.
+
+To create a symbolic link, you use the ln command with the -s option (stands for soft), as follows:
+
+ln -s target_file link_name
+
+Symbolic links can help when you want to easily switch between different versions of a file or keep files synchronized across different directories.
+
+Assigment: Dynamic Configuration Switching with Symbolic Links
+In a development environment, you often have various configurations - for development, testing, production, etc. 
+Symbolic links can facilitate smooth transitions between these environments without changing the code or manually copying and replacing files.
+
+Let's create a scenario where we have a Python script that reads from a configuration file, 
+and we will switch between different configurations using symbolic links dynamically:
+
+First, create two configuration files:
+
+config_dev.json
+{
+  "environment": "development",
+  "database": {
+    "host": "localhost",
+    "port": 5432
+  }
+}
+
+config_prod.json
+{
+  "environment": "production",
+  "database": {
+    "host": "prod.mydatabase.com",
+    "port": 5432
+  }
+}
+
+Now, in your Python script, you'll always read from a file called config.json:
+
+read_config.py:
+
+import json
+
+def read_config(filename):
+    with open(filename, 'r') as file:
+        config = json.load(file)
+    return config
+
+config = read_config('config.json')
+print(f"Environment: {config['environment']}")
+print(f"Database host: {config['database']['host']}")
+print(f"Database port: {config['database']['port']}")
+
+To start, create a symbolic link to your development configuration:
+
+ln -s config_dev.json config.json
+
+Run your script:
+
+python read_config.py
+
+You should see the development configuration output.
+
+Now, to switch to the production configuration, update the symbolic link:
+-sf says create soft link forcefully, basically overwrites old version 
+
+ln -sf config_prod.json config.json
+Run your script again:
+
+python read_config.py
+
+
+You'll see it now uses the production configuration. 
+
+Conclusion:
+This setup allows you to switch between configurations quickly without modifying your Python script or manually copying files, 
+providing a dynamic way to switch configurations. Soft Links are very useful, because they can point not only files but directories as well.
+
+
+
+
+

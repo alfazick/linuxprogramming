@@ -1,0 +1,125 @@
+Different Kinds of Files and File-like Objects in Linux
+
+Types of Files
+Regular Files: These are the common files that contain data. 
+They can be text files, binary files, or executables.
+
+Directories: Directories store both special and regular files.
+
+Symbolic Links (Symlinks): These are pointers to other files.
+
+Block Special Files: Represent devices with data organized in blocks, such as a hard drive.
+
+Character Special Files: Represent devices with data organized as a stream of characters, 
+like keyboards.
+
+FIFO (Named Pipes): Special files that provide a form of IPC (Inter-Process Communication).
+
+Sockets: These are special files that represent a communication endpoint, 
+used for networking, IPC, etc.
+
+Using file command
+
+To identify the type of a file, use the file command followed by the file name, for example:
+file filename.txt
+
+Below is a Python script demonstrating the use of different 
+kinds of files and file-like objects in Linux. 
+This script does the following:
+
+Creates regular files and writes data to them.
+Creates a directory and organizes files within it.
+Creates a symbolic link to a file.
+Demonstrates how to work with FIFO (named pipes) for IPC.
+Opens a socket for inter-process communication.
+
+
+import os
+import socket
+import time
+
+# Step 1: Working with Regular Files
+# Create regular files and write data to them
+with open('file1.txt', 'w') as f:
+    f.write("Hello, this is a regular file.\n")
+    
+# Step 2: Working with Directories
+# Create a directory and organize files within it
+os.mkdir('example_dir')
+os.rename('file1.txt', 'example_dir/file1.txt')
+
+# Step 3: Working with Symbolic Links (Symlinks)
+# Create a symbolic link to a file
+os.symlink('example_dir/file1.txt', 'example_dir/symlink_to_file1.txt')
+
+# Step 4: Working with FIFO (Named Pipes)
+# Create a named pipe and write data to it in a separate process
+os.mkfifo('example_fifo')
+def fifo_writer():
+    with open('example_fifo', 'w') as f:
+        f.write("Hello from the FIFO writer!")
+    
+from threading import Thread
+writer_thread = Thread(target=fifo_writer)
+writer_thread.start()
+
+# Open the named pipe and read data from it
+with open('example_fifo', 'r') as f:
+    print(f.read())  # Output: Hello from the FIFO writer!
+
+# Clean up FIFO file
+os.remove('example_fifo')
+
+# Step 5: Working with Sockets
+# Open a socket for inter-process communication
+def socket_server():
+    server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    server_socket.bind(('localhost', 65432))
+    server_socket.listen()
+    conn, addr = server_socket.accept()
+    with conn:
+        conn.sendall(b'Hello from the socket server!')
+    
+server_thread = Thread(target=socket_server)
+server_thread.start()
+
+# Allow the server to start listening before the client attempts to connect
+time.sleep(0.1)
+
+client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+client_socket.connect(('localhost', 65432))
+data = client_socket.recv(1024)
+print(data.decode('utf-8'))  # Output: Hello from the socket server!
+
+# Cleanup: close socket and remove created files and directories
+client_socket.close()
+os.remove('example_dir/symlink_to_file1.txt')
+os.remove('example_dir/file1.txt')
+os.rmdir('example_dir')
+
+
+How to Run the Script
+Save the script to a file, for example, 
+linux_file_types.py.
+
+Open a terminal.
+Navigate to the directory where you saved the script.
+
+Run the script using Python 3 by executing the command 
+python3 linux_file_types.py.
+
+Explanation
+In Steps 1 and 2, we demonstrate creating regular files and directories and 
+moving a file into a directory.
+
+In Step 3, we create a symbolic link to the file we created in step 1.
+
+Step 4 illustrates the creation of a FIFO named pipe and writing data to it 
+in a separate thread, then reading the data from the main thread.
+
+In Step 5, we demonstrate socket communication between a server thread and 
+the main thread using TCP/IP protocol to send and receive messages.
+
+Ensure Python 3 is installed on your Linux system to successfully run the script. 
+Adjustments may be necessary for environments with different setups or permissions.
+
