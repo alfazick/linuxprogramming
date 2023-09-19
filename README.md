@@ -8,4 +8,6 @@
 
 **03 Basic Text Manipulation, Pipes, Redirection, File Descriptors Concept -> Ready**
 
+**04 User-Group Managment + Permission Access -> Ready**
 
+**05 Everything is A File -> Ready**
