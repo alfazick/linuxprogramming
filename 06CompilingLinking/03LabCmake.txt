@@ -1,0 +1,97 @@
+Ok obviosly, if a project consist more than 3 files nobody gonna compile them manually.
+
+So here comes another tool called cmake 
+
+Simplified CMake tutorial tailored to help you understand how to use CMake to build a project, 
+using the Task and TodoList application we discussed earlier. 
+CMake is a cross-platform build-system generator that can generate files to build your project using various build tools.
+
+1. Installation
+First, ensure that CMake is installed on your system:
+
+sudo apt update
+sudo apt install cmake
+
+
+2. Project Structure
+
+Your project should have the following structure:
+
+YourProjectFolder
+│
+├── CMakeLists.txt
+├── Task.cpp
+├── Task.h
+├── TodoList.cpp
+├── TodoList.h
+└── main.cpp
+
+
+3. CMakeLists.txt
+Create a CMakeLists.txt file in the root of your project directory with the following content:
+
+
+cmake_minimum_required(VERSION 3.10)
+
+project(TodoListApp)
+
+set(CMAKE_CXX_STANDARD 14)
+
+add_executable(TodoListApp main.cpp Task.cpp TodoList.cpp)
+
+
+This file tells CMake the minimum version required, the project name, the C++ standard to use, 
+and which files to compile and link to create the TodoListApp executable.
+
+4. Generate Build Files and Compile
+
+Navigate to your project directory in the terminal and create a build directory, then navigate into it:
+
+
+mkdir build
+cd build
+
+
+Run CMake to generate build files and then compile the project:
+cmake ..
+make
+
+
+The .. in cmake .. points to the parent directory where CMakeLists.txt is located. 
+After running these commands, the TodoListApp executable should be generated inside the build directory.
+
+5. Run the Application
+Run the compiled application:
+
+./TodoListApp
+
+
+Benefits of Using CMake:
+
+Cross-Platform: 
+CMake is a cross-platform tool, making it easier to manage builds on different operating systems and IDEs.
+
+Out-of-Source Builds: 
+
+CMake encourages out-of-source builds, keeping the build files separate from your source code, 
+which helps maintain a clean project structure.
+
+Scalability: 
+CMake is well-suited for both small and large projects, and it can handle complex build systems 
+with multiple dependencies and configurations.
+
+Manageable: 
+CMakeLists.txt files are organized hierarchically, 
+making it easier to manage multi-directory projects and dependencies.
+
+Find Packages & Libraries: 
+CMake can automatically find libraries and packages, manage dependencies, and link against the correct libraries, 
+making the build process smoother.
+
+Customizable Build Configurations: 
+You can easily manage different build configurations, compiler flags, and build types (Debug, Release) with CMake.
+
+Conclusion
+This simple tutorial introduces the basics of using CMake to manage your build process. 
+CMake offers several advanced features and functions that you can explore as your project grows and evolves, 
+such as managing external dependencies, setting custom build flags, and configuring installation targets.

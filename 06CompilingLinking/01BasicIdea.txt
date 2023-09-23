@@ -1,0 +1,82 @@
+Compiler we will use in our class is clang
+
+Clang is a compiler front end for the programming languages C, C++, Objective-C, 
+Objective-C++, OpenMP, OpenCL, and CUDA. It uses LLVM as its back end 
+and has been part of the LLVM release cycle since LLVM 2.6.
+
+Features and Goals:
+
+Performance: Clang is designed to perform both compilation and linking 
+extremely quickly. It aims to reduce both the memory usage and runtime 
+of these processes compared to its predecessors.
+
+Diagnostics: 
+Clang provides rich, detailed diagnostics (error and warning messages) for developers,
+which are extremely helpful for debugging.
+
+Modularity and Library-Based Design: 
+Clang is designed to be able to replace parts of the compiler chain with 
+other parts or extend it in various ways, all while being API compatible with GCC 
+(GNU Compiler Collection) when command line options are concerned.
+
+Static Code Analysis: 
+Clang provides a static code analyzer that offers a variety of checks to identify bugs,
+memory leaks, and other potential issues in the code, which enhances code quality 
+and reliability.
+
+The Clang compiler has been adopted by a variety of tech companies, organizations, 
+and open-source projects due to its performance, detailed diagnostics, 
+and extensibility. Some notable adopters of Clang include:
+
+Apple: 
+Apple uses Clang as the default compiler for its Xcode IDE. 
+Clang is used to compile applications for macOS, iOS, watchOS, and tvOS.
+
+Google: 
+Google utilizes Clang for several projects, including Android (since Android Nougat)
+and Chrome. The Chromium project also recommends Clang for 
+building Chromium on various platforms.
+
+Sony: 
+Sony has adopted Clang for developing software on PlayStation platforms.
+
+General Responsobilities of any kind of compilers.
+
+In general, the responsibility of a compiler is to translate a 
+high-level source code written in one programming language 
+into a lower-level language, often machine code or an intermediate code,
+so that it can be executed by a computer. The compilation process can be broken 
+down into several stages.
+
+Preprocessing:
+The preprocessor handles directives like #include and #define. 
+It expands included files, macros, and evaluates conditional compilation statements, 
+producing an expanded source code ready for the next stage.
+
+Compiling to Assembly Code:
+The compiler translates the preprocessed high-level source code into assembly code. 
+This representation is closer to machine code but still maintains a level of human readability, 
+representing the operations and data movements that the source code describes.
+
+Assembling to Object Code:
+The assembler converts the assembly code into object code. 
+Object code is a binary representation of the program, consisting of machine instructions, data, and information needed for linking.
+
+Linking:
+The linker takes one or more object files and combines them into a single executable file. 
+It resolves symbols, addresses, and handles the arrangement of data and code in memory, 
+producing a file that can be executed by the system.
+
+Debugging:
+During compilation, the compiler can embed additional debugging information into the executable. 
+This information is crucial for debugging tools, as it maps machine instructions back to the original source code, 
+aiding developers in identifying and fixing issues.
+
+These responsibilities demonstrate how a compiler transforms human-readable code 
+into an executable program, with each step progressively moving closer to machine-level 
+representation while facilitating the development process through debugging.
+
+In practice we will concentrate on clang 
+
+Open and follow.
+01LabIntrotoClang.txt

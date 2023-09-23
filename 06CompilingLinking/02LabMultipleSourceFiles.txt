@@ -1,0 +1,187 @@
+sudo apt install clang
+
+Create a directory called todlist and move there
+mkdir todlist
+cd todlist
+
+Ok now create a 5 separate files
+
+1
+=> Task.h
+
+#pragma once
+
+#include <string>
+
+class Task {
+public:
+    Task(const std::string& description);
+    void complete();
+    std::string getDescription() const;
+    bool isCompleted() const;
+private:
+    std::string description;
+    bool completed;
+};
+
+2
+=> Task.cpp
+
+#include "Task.h"
+
+Task::Task(const std::string& description)
+    : description(description), completed(false) {}
+
+void Task::complete() {
+    completed = true;
+}
+
+std::string Task::getDescription() const {
+    return description;
+}
+
+bool Task::isCompleted() const {
+    return completed;
+}
+
+3
+=> TodoList.h
+
+#pragma once
+
+#include <vector>
+#include "Task.h"
+
+class TodoList {
+public:
+    void addTask(const Task& task);
+    void completeTask(int index);
+    void displayTasks() const;
+private:
+    std::vector<Task> tasks;
+};
+
+4
+=> TodoList.cpp
+
+#include <iostream>
+#include "TodoList.h"
+
+void TodoList::addTask(const Task& task) {
+    tasks.push_back(task);
+}
+
+void TodoList::completeTask(int index) {
+    if (index >= 0 && index < tasks.size()) {
+        tasks[index].complete();
+    }
+}
+
+void TodoList::displayTasks() const {
+    for (const auto& task : tasks) {
+        std::cout << (task.isCompleted() ? "[x] " : "[ ] ") << task.getDescription() << std::endl;
+    }
+}
+
+5
+=> main.cpp
+
+#include "TodoList.h"
+
+int main() {
+    TodoList todoList;
+    todoList.addTask(Task("Learn about compiling and linking"));
+    todoList.addTask(Task("Write a TodoList application"));
+    todoList.displayTasks();
+    
+    todoList.completeTask(0);
+    todoList.displayTasks();
+    
+    return 0;
+}
+
+Ok now comes a magic moment 
+
+# Compile each source file into an object file
+clang++ -c Task.cpp -o Task.o
+clang++ -c TodoList.cpp -o TodoList.o
+clang++ -c main.cpp -o main.o
+
+
+# Link all the object files into a single executable
+clang++ Task.o TodoList.o main.o -o TodoListApp
+
+Run the program 
+./TodoListApp 
+
+
+Ok at this moment you can say, so what ? What I am gaining. Let's proceed.
+
+Make Changes to Task.cpp:
+Edit Task.cpp and add the printTaskDetails method.
+
+#include "Task.h"
+#include <iostream> // Include iostream
+
+// ... (other method definitions)
+
+void Task::printTaskDetails() const {
+    std::cout << "Task: " << description << " - " << (completed ? "Completed" : "Not Completed") << std::endl;
+}
+
+void Task::complete() {
+    completed = true;
+    printTaskDetails(); // Call the new method
+}
+
+
+Also, update Task.h to declare the new method.
+
+#pragma once
+#include <string>
+
+class Task {
+public:
+    // ... (other method declarations)
+    void printTaskDetails() const; // Declare the new method
+private:
+    std::string description;
+    bool completed;
+};
+
+
+Recompile Only the Updated File:
+
+Since only Task.cpp has been modified, recompile only this file.
+clang++ -c Task.cpp -o Task.o
+
+Relink the Object Files:
+Link the updated object file with the other, unchanged object files to form the new executable.
+
+clang++ Task.o TodoList.o main.o -o TodoListApp
+
+Execute the Updated Application:
+
+Run the updated application to observe the changes.
+./TodoListApp
+
+=> Benefits of Linking Object Files:
+
+Efficiency: 
+Only the changed files need to be recompiled, 
+which is more efficient for larger projects, 
+especially when only a small part of the codebase is modified.
+
+Parallel Compilation: 
+Object files can be compiled in parallel, 
+reducing the overall compilation time for projects with multiple source files.
+
+Modular Development: 
+Developers can work on different modules (source files) of a project independently. 
+As long as the interface (header files) remains consistent, 
+individual modules can be updated and recompiled separately.
+
+Incremental Compilation: 
+When working with large codebases, compiling only the changed files significantly 
+speeds up the development process.
+
