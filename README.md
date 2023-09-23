@@ -11,3 +11,5 @@
 **04 User-Group Managment + Permission Access -> Ready**
 
 **05 Everything is A File -> Ready**
+
+**06 Compiling and Linking -> Ready**
