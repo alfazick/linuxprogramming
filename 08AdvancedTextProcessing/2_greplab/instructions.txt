@@ -1,0 +1,15 @@
+Grep Lab Exercise for Software Developers
+
+Objective: Apply `grep` to real-world software development scenarios.
+
+Setup:
+1. Consider you have a codebase with multiple `.py` (Python) files.
+2. You've also got application logs (`app.log`) recording the behavior of your application.
+
+Tasks:
+1. Find all Python functions in the codebase that might be printing to the console.
+2. Identify all error logs in `app.log`.
+3. Search for all TODO comments in the codebase.
+4. List all instances of a variable named `dbConnection` in the codebase, 
+along with their line numbers.
+5. Extract URLs (starting with "http:// or "https://") from `app.log`.

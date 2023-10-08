@@ -1,0 +1,20 @@
+[INFO] This is a log statement
+[DEBUG] This is a log statement
+[ERROR] There was an error on module_1.py
+[INFO] This is a log statement
+[INFO] This is a log statement
+[INFO] This is a log statement
+[ERROR] There was an error on module_1.py
+[INFO] This is a log statement
+[WARNING] This is a log statement
+[INFO] This is a log statement
+[WARNING] This is a log statement
+[WARNING] This is a log statement
+[INFO] This is a log statement
+[ERROR] There was an error on module_2.py
+[ERROR] There was an error on module_3.py
+[DEBUG] Accessing http://example.com/resource1
+[ERROR] There was an error on module_1.py
+[INFO] This is a log statement
+[ERROR] There was an error on module_2.py
+[INFO] This is a log statement
