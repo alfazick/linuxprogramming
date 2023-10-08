@@ -1,0 +1,23 @@
+Exercises:
+
+Code Refactoring: Use sed to change all instances of the string Debug: to Info: in app.py.
+
+Configuration Management: 
+Update settings.ini to change the database URL 
+to http://production.database.com without modifying the original file.
+
+Code Analysis: Extract all lines from app.py that contain the word TODO.
+
+Function Renaming: In app.py, change the 
+function name connect_database to establish_database_connection 
+and update all its occurrences.
+
+Solutions:
+
+$ sed 's/Debug:/Info:/g' app.py
+
+$ sed 's#http://localhost:8080#http://production.database.com#g' settings.ini > settings_new.ini
+
+$ sed -n '/TODO/p' app.py
+
+$ sed 's/connect_database/establish_database_connection/g' app.py

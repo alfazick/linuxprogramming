@@ -1,0 +1,20 @@
+AWK Lab Exercise Instructions
+
+Objective: Develop a solid understanding of 
+AWK's capabilities by analyzing pseudo-log files.
+
+Setup:
+
+1. Familiarize yourself with the structure of a hypothetical log file, application.log:
+   Format: [TIMESTAMP] [LOG_LEVEL] [MODULE] Message
+   Example: [2022-09-03 12:30:45] [ERROR] [AUTH] Failed login attempt.
+
+2. Recognize that logs can be vital for software developers to debug and 
+monitor system behavior.
+
+Tasks:
+
+1. Identify and list all unique log levels in the log file.
+2. Extract and display all logs originating from the DATABASE module.
+3. Determine the number of unique error messages logged by the AUTH module.
+4. Rank and display the software modules based on the number of logs they generated.

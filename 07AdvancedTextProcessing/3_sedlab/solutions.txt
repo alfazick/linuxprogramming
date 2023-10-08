@@ -1,0 +1,82 @@
+1. Code Refactoring
+Solution: $ sed 's/Debug:/Info:/g' app.py
+
+Explanation:
+
+sed: The stream editor command used for parsing and transforming text.
+
+'s/Debug:/Info:/g': This is a sed expression for substitution:
+
+s: The substitute command.
+Debug:: The pattern to search for.
+Info:: The replacement string.
+g: Stands for "global", meaning it will replace all occurrences in a line, 
+not just the first one.
+app.py: The input file which sed will operate on.
+
+When this command is run, every occurrence of the string "Debug:" in app.py 
+will be replaced by "Info:", and the result will be printed to the console. 
+The file app.py remains unchanged unless -i option is used with sed.
+
+2. Configuration Management
+Solution: 
+$ sed 's#http://localhost:8080#http://production.database.com#g' settings.ini > settings_new.ini
+
+Explanation:
+
+sed: The stream editor.
+
+'s#http://localhost:8080#http://production.database.com#g': 
+This is a sed substitution expression similar to the first, 
+but note the use of the # delimiter instead of /. We've used a different delimiter 
+because the search and replace strings contain forward slashes, 
+and using / as a delimiter would complicate the expression.
+
+settings.ini: The input file that sed will operate on.
+
+> settings_new.ini: This redirects the output (the modified content) to a new file 
+named settings_new.ini. Without this, the result would simply be printed to the console.
+
+When the command is run, it will search for the database 
+URL "http://localhost:8080" in settings.ini and replace 
+it with "http://production.database.com", 
+saving the modified content to settings_new.ini.
+
+3. Code Analysis
+Solution: $ sed -n '/TODO/p' app.py
+
+Explanation:
+
+sed -n: The -n option tells sed to suppress automatic printing of pattern space 
+(i.e., it won't print anything unless explicitly told to).
+
+/TODO/p: This is a sed expression to search and print:
+
+/TODO/: The pattern to search for.
+p: Print command. This tells sed to print lines that match the pattern.
+app.py: The input file.
+
+When this command is run, only the lines containing the word "TODO" 
+in app.py will be printed to the console.
+
+4. Function Renaming
+Solution: $ sed 's/connect_database/establish_database_connection/g' app.py
+
+Explanation:
+
+sed: The stream editor.
+
+'s/connect_database/establish_database_connection/g'
+
+This is another sed substitution expression:
+
+s: The substitute command.
+connect_database: The pattern to search for (the original function name).
+establish_database_connection: The replacement string (the new function name).
+g: Stands for "global".
+app.py: The input file.
+
+When run, this command will replace all occurrences of the function name 
+"connect_database" with "establish_database_connection" in app.py and 
+print the modified content to the console. 
+The original file remains unchanged unless the -i option is used.

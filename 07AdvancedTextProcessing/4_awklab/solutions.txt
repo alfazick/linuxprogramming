@@ -1,0 +1,39 @@
+AWK Lab Exercise Solutions and Explanations
+
+1. Display all unique log levels:
+Command:
+
+$ awk -F'] \\[' '{print $2}' application.log | sort | uniq
+
+Explanation:
+- `-F'] \\['`: This sets the field separator to the pattern `] [`. 
+We use double backslashes due to the escape sequence in the shell.
+- `{print $2}`: This AWK command prints the second field (i.e., the log level).
+
+
+2. Extract logs from the DATABASE module:
+Command:
+
+$ awk -F'] \\[' '/DATABASE/ {print}' application.log
+
+Explanation:
+- The pattern `/DATABASE/` checks each line for the presence of the string "DATABASE".
+- The `{print}` action tells `awk` to print lines that match the pattern.
+
+3. Display unique error messages from the AUTH module:
+Command:
+$ awk -F'] \\[' '$2 == "[ERROR]" && $3 ~ "AUTH" {print $4}' application.log | sort | uniq
+
+Explanation:
+- This command checks for lines where the log level (second field) is "[ERROR]" and the module (third field) contains "AUTH". If both conditions are met, it then prints the message (fourth field).
+
+4. Rank modules by log count:
+Command:
+$ awk -F'] \\[' '{print $3}' application.log | cut -d':' -f1 | sort | uniq -c | sort -rn
+
+Explanation:
+- `-F'] \\['`: Sets the field separator.
+- `{print $3}`: Prints the module name (e.g., [DATABASE]:).
+- `cut -d':' -f1`: Further processes the output to only capture the module name without the trailing colon and message.
+- `uniq -c`: Prefixes lines by the number of occurrences.
+- `sort -rn`: Sorts in reverse numerical order to rank modules by log count.
