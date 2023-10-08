@@ -14,4 +14,6 @@
 
 **06 Compiling and Linking -> Ready**
 
-**07 Advanced Text Processing -> Ready**
+**07 Software Package Managment -> Ready**
+
+**08 Advanced Text Processing -> Ready**
