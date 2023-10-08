@@ -13,3 +13,5 @@
 **05 Everything is A File -> Ready**
 
 **06 Compiling and Linking -> Ready**
+
+**07 Advanced Text Processing -> Ready**
