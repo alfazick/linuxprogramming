@@ -1,0 +1,203 @@
+Linux File Management and Comparison: 
+Theory and Lab Exercise
+
+Objective
+Understand and get hands-on experience with Linux commands like 
+diff, which, locate, and find 
+to effectively manage and navigate files and directories from a developer's perspective.
+
+=> Theory
+
+1. diff command
+
+Use Case: To find line-by-line differences between two files, facilitating code comparison.
+
+Options:
+-q: Quick check; only identifies if files are different without detailing the differences.
+-r: Recursively compares files in subdirectories.
+-y: Displays differences side-by-side.
+
+2. which command
+
+Use Case: Quickly locate the full pathname of shell commands, aiding in script writing.
+Example:
+which python3
+
+
+3. locate command
+
+Use Case: Fast search for file locations using a prebuilt database, 
+enhancing productivity while navigating large codebases.
+
+Options:
+-b: Matches only the file names, excluding directory names.
+-i: Performs a case-insensitive search.
+-q: Suppresses error messages to avoid clutter in outputs.
+-r: Enables the use of regular expressions for searching.
+
+4. find command
+
+Use Case: Locates files based on attributes like ownership and permissions, 
+vital for managing project files and ensuring security.
+
+Options:
+-gid: Finds files belonging to a specific group ID.
+-perm: Searches files based on permissions.
+-user: Identifies files owned by a particular user.
+-size: Filters files based on size.
+
+
+=> Lab Exercise SIMPLE
+Setup
+Ensure you have the following:
+
+Linux environment
+Terminal or SSH client
+Text editor (like nano, vim, or gedit)
+Exercises
+1. Creating Sample Files and Directories
+
+Context: Developers often initiate projects by setting up files and directories.
+
+Task: Create a dev_lab directory and populate it with text files.
+
+mkdir dev_lab
+cd dev_lab
+echo "Hello World" > file1.txt
+echo "Hello Linux" > file2.txt
+
+2. Using the diff Command
+
+Context: Comparing different versions of files is a regular task in development.
+Task: Identify differences between file1.txt and file2.txt using various diff options.
+
+diff -y file1.txt file2.txt
+
+3. Using the which Command
+
+Context: Developers often need to find the full path of utilities or commands.
+Task: Find the full path of the python3 command.
+
+which python3
+
+4. Using the locate Command
+
+Context: Quickly find files in large codebases to expedite the development process.
+
+Task: Locate file1.txt after updating the database with updatedb.
+
+sudo updatedb
+locate file1.txt
+
+5. Using the find Command
+
+Context: Finding files based on group ID aids in project management and security.
+Task:
+Determine your user group's gid with id.
+
+id -g
+Use find to locate files with your gid.
+find . -gid <your_gid_here>
+
+Conclusion
+You've explored Linux commands essential for developers.
+Utilizing these commands can streamline your workflow in Linux environments, 
+aiding in tasks like code comparison and file location.
+
+Cleanup
+Remove the dev_lab directory to maintain a clean environment post-lab.
+
+cd ..
+rm -r dev_lab
+
+
+Find and Compare Files - Additional Resources
+Refer to the following resources to learn more about the commands discussed in this lesson:
+
+Command	Reference Link
+diff	https://ss64.com/bash/diff.html
+which	https://ss64.com/bash/which.html
+locate	https://ss64.com/bash/locate.html
+find	https://ss64.com/bash/find.html
+
+
+Feel free to delve deeper into each command to enhance your understanding and capabilities in 
+Linux file management and comparison.
+
+Linux Commands Lab using Python Scripts MORE INVOLVED
+
+Task 1: Setting up Your Environment
+Create a directory named python_scripts_lab and navigate into it.
+
+Solution:
+mkdir python_scripts_lab
+cd python_scripts_lab
+
+
+Task 2: Exploring the ls Command
+Create a Python file named script1.py with a print statement and 
+explore different ls options to list files in various ways.
+
+Solution:
+echo "print('Hello, world!')" > script1.py
+ls -a
+ls -l
+ls -t
+ls -S
+
+Task 3: Manipulating Files
+Use the touch command to create a new Python file.
+Create a hard link to the new file.
+Display the content of script1.py and the new file using the cat command.
+
+Solution:
+
+touch script2.py
+ln script2.py script2_hardlink.py
+cat script1.py script2.py
+
+Task 4: Working with pr and grep Commands
+Update the content of script2.py with a new print statement.
+Use the pr command to display script1.py and script2.py side by side.
+Use the grep command to find all lines containing the word "Hello" in script1.py.
+
+Solution:
+
+echo "print('Hello, again!')" > script2.py
+pr -m script1.py script2.py
+grep "Hello" script1.py
+
+Task 5: Using head and tail Commands
+Use the head command to display the first 5 lines of script1.py.
+Use the tail command to display the last 5 lines of script2.py.
+
+head -n 5 script1.py
+tail -n 5 script2.py
+
+Task 6: Navigating Large Files with less and more Commands
+
+Create a large Python script with 100 lines using a loop.
+Use the less command to navigate through the script page by page.
+Use the more command to navigate through the script page by page.
+
+Solution:
+
+for i in {1..100}; do echo "print('Line $i')" >> large_script.py; done
+less large_script.py
+more large_script.py
+
+Task 7: Understanding diff, which, and find Commands
+
+Create a modified version of script2.py.
+Use the diff command to find differences between script2.py and its modified version.
+Use the which command to find the full path of the python3 executable.
+Use the find command to list all Python files in the current directory and its subdirectories.
+
+Solution:
+cp script2.py script2_modified.py
+echo "print('Hello, modified!')" >> script2_modified.py
+diff script2.py script2_modified.py
+which python3
+find . -name "*.py"
+
+
