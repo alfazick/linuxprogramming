@@ -1,0 +1,92 @@
+Lab4 : Building a Debian Package with a Simple C++ Program using CMake and Clang++
+
+Objective:
+In this lab, you will create a Debian package from a simple C++ program's source code.
+
+1. Prerequisites:
+
+Ensure that you have the necessary utilities and compilers installed:
+
+sudo apt-get update
+sudo apt-get install dh-make fakeroot build-essential clang cmake
+
+
+2. Write a Simple C++ Program:
+Create a file named myprogram.cpp with the following content:
+
+#include <iostream>
+
+int main() {
+    std::cout << "Hello, Debian!" << std::endl;
+    return 0;
+}
+
+3. Create a CMakeLists.txt:
+Create a CMakeLists.txt with the following content:
+
+cmake_minimum_required(VERSION 3.10)
+project(MyProgram)
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_COMPILER "clang++")
+add_executable(myprogram myprogram.cpp)
+install(TARGETS myprogram DESTINATION bin)
+
+
+4. Create Source Tarball:
+Package the myprogram.cpp and CMakeLists.txt into a tarball named myprogram-1.0.tar.gz:
+
+mkdir myprogram-1.0
+cp myprogram.cpp CMakeLists.txt myprogram-1.0
+tar czvf myprogram-1.0.tar.gz myprogram-1.0
+
+5. Build the Debian Package:
+a) Create a Working Directory:
+
+rm -rf WORK && mkdir WORK && cd WORK
+cp ../myprogram-1.0.tar.gz .
+
+b) Expand the Source Tarball:
+
+tar xvf myprogram-1.0.tar.gz
+
+c) Navigate into Expanded Directory:
+
+cd myprogram-1.0
+
+d) Build the Package:
+
+dh_make -f ../*myprogram-1.0.tar.gz
+dpkg-buildpackage -uc -us
+
+6. Install and Verify the Package:
+a) Install the Package:
+
+cd ..
+sudo dpkg --install *.deb
+
+b) Verify Installation:
+
+myprogram
+Output should be: Hello, Debian!
+
+c) Uninstall the Package:
+If you have multiple packages depending on myprogram, 
+you might have to remove all of them before you can successfully remove myprogram. 
+You can check the dependencies using the following command:
+
+apt rdepends myprogram
+
+You should remove the myprogram-dbgsym package first before removing the myprogram package. 
+Here's how you can do it:
+sudo dpkg --remove myprogram-dbgsym
+sudo dpkg --remove myprogram
+
+
+The first command removes the myprogram-dbgsym package, which has a dependency on myprogram. 
+Once the dependent package is removed, the second command should successfully remove 
+the myprogram package without encountering any dependency issues.
+
+
+Conclusion:
+In this lab, you have successfully created, built, installed, and uninstalled 
+a Debian package containing a simple C++ program, using cmake and clang++.

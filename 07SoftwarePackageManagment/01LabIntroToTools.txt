@@ -1,0 +1,97 @@
+
+Introduction to Tools
+
+1. wget
+
+Theory
+Description: wget is a non-interactive downloader in Linux that retrieves files using HTTP, HTTPS, and FTP.
+
+Usage:
+Basic Syntax: wget [option]... [URL]...
+
+Common Options:
+-c: Continue getting partially downloaded files.
+-O [filename]: Directs downloads to the filename provided.
+
+Practical
+Objective: Download the nano text editor source code.
+
+Commands:
+
+wget https://www.nano-editor.org/dist/v5/nano-5.0.tar.xz
+
+2. curl
+
+Theory
+Description: curl is utilized to transfer data from or to a server using various protocols.
+Usage:
+Basic Syntax: curl [options] [URL]...
+Common Options:
+-o [filename]: Write output to [filename] instead of stdout.
+-u [user:password]: Authenticate with specified credentials.
+Practical
+Objective: Download a file and save it as example.txt.
+
+Commands:
+To download the HTML content of google.com using curl and save it to a file called google.html, you can use the following command:
+
+bash
+Copy code
+curl -o google.html http://www.google.com
+
+This will fetch the HTML content from Google's homepage and save it to a file named google.html in the 
+current working directory. If you open this file with a text editor, you'll see the HTML that your web browser 
+uses to render the Google homepage.
+
+Please note that web scraping (i.e., programmatically downloading and processing web pages) 
+should be done in compliance with the legalities and ethical guidelines, and it is important to 
+respect the robots.txt file of a website, which provides guidelines on what you are allowed to access and download.
+
+
+3. tar
+
+Theory
+Description: tar is used to create, maintain, modify, or extract files that are archived in the tar format.
+Usage:
+Basic Syntax: tar [options] [archive-file] [file or directory to be archived]
+Common Options:
+-c: Create archive.
+-x: Extract archive.
+-v: Verbosely show the .tar file progress in the terminal.
+-f: Filename to archive.
+
+Practical
+Objective: Create a tarball of a directory and extract it elsewhere.
+
+Commands:
+
+mkdir example_dir
+echo "This is a test file" > example_dir/test.txt
+tar -cvf example_tarball.tar example_dir
+mkdir extract_here
+tar -xvf example_tarball.tar -C extract_here
+
+
+4. gcc
+Theory
+Description: gcc is a compiler for languages including C and C++, and it's used to compile and link programs.
+
+Usage:
+
+Basic Syntax: gcc [options] [source files] [object files] [-Ldir] -llibname [-o outfile]
+Common Options:
+-o [filename]: Specifies the filename of the compiled output.
+-Wall: Enable all warning messages.
+Practical
+Objective: Compile and run a simple "Hello, World!" C program.
+
+Commands:
+
+echo '#include<stdio.h>\n int main(){ printf("Hello, World!\\n"); return 0; }' > hello.c
+gcc -Wall -o hello hello.c
+./hello
+
+
+This lab provides a fundamental understanding and hands-on approach for 
+utilizing wget, curl, tar, and gcc in a Linux environment. 
+This foundational knowledge assists in managing packages, transferring data, archiving, and compiling source code. 

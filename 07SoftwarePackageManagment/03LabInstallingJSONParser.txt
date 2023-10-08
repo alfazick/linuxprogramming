@@ -1,0 +1,90 @@
+Lab Exercise: Installing and Utilizing Jq
+
+https://jqlang.github.io/jq/
+
+
+Objective:
+
+Download, compile, and install jq from source.
+Utilize jq to manipulate JSON data.
+
+Prerequisites:
+Basic knowledge of Linux command-line tools.
+Basic knowledge of JSON data structure.
+A Linux system with wget, curl, tar, and build-essential tools installed.
+
+Lab Overview:
+
+Downloading Jq Source Code
+Extracting and Installing Jq
+Testing Jq Installation
+Practical Utilization of Jq
+
+
+1. Downloading Jq Source Code
+Objective: Download jq 1.6 source code from GitHub using wget or curl.
+
+Task A: Using wget
+
+wget https://github.com/stedolan/jq/releases/download/jq-1.6/jq-1.6.tar.gz
+Task B: Using curl
+
+curl -LO https://github.com/stedolan/jq/releases/download/jq-1.6/jq-1.6.tar.gz
+
+
+2. Extracting and Installing Jq
+Objective: Extract the tarball and install jq.
+
+Task A: Extracting Jq
+
+tar xzf jq-1.6.tar.gz
+cd jq-1.6
+
+Task B: Installing Jq
+Note: Installation of additional dependencies might be necessary.
+
+autoreconf -i
+./configure
+make
+make install
+
+3. Testing Jq Installation
+Objective: Ensure jq is installed and functioning correctly.
+Task: Verify Jq Version
+
+jq --version
+
+Expected Output:
+jq-1.6
+
+4. Practical Utilization of Jq
+
+Objective: Use jq to filter and format JSON data.
+
+Task A: Create Sample JSON Data
+
+echo '{"users": [{"name": "John", "age": 30}, {"name": "Jane", "age": 25}]}' > users.json
+
+Task B: Utilize Jq to Extract Data
+Use jq to extract the name of the first user.
+
+jq '.users[0].name' users.json
+Expected Output:
+
+"John"
+
+Task C: Advanced Jq Usage
+Filter users yonger than 28 and get their names.
+
+jq '.users[] | select(.age < 28) | .name' users.json
+
+Expected Output:
+"Jane"
+
+Lab Summary
+Key Learning: Basic source code management and JSON data manipulation using command-line tools.
+
+Additional Notes: Exploring more advanced functionalities of jq and mastering 
+JSON data handling are crucial in dealing with API responses and configuration files in 
+devOps, Data Engineering, and Software Development contexts.
+

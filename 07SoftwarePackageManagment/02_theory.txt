@@ -1,0 +1,62 @@
+General Flow for Software Installation: Get Source Code -> Archive -> Compile
+
+
+1. Get Source Code:
+This is where you download the raw, often uncompressed, 
+source code of the software directly from the web. 
+Developers share their projects' source code in repositories (like GitHub, GitLab, etc.) or on their websites.
+
+Examples:
+Using wget or curl to download source code from a provided URL. 
+They both can retrieve files from servers using various types of network protocols.
+
+
+2. Archive:
+Developers often archive (or compress) their code into tarballs (*.tar.gz or *.tar.bz2 files) 
+to reduce the file size and make downloads faster and more manageable.
+
+Examples:
+Using tar to bundle or unbundle files.
+
+Bundling: Combining many files and directories into a single file (tarball).
+Unbundling: Extracting the files and directories from the tarball.
+
+After unbundling the tarball, you'll have a directory containing the source code, 
+which can typically be compiled and installed.
+
+3. Compile:
+
+Compiling is translating the source code (often written in languages like C or C++) 
+into machine code that can be executed by your computer's processor.
+
+Examples:
+
+Using gcc to compile the source code into an executable. 
+It translates the high-level code into machine code suitable for your specific system architecture.
+
+Normally, open-source projects distributed in this manner come with 
+a configure script and a Makefile which simplify the compilation process:
+
+
+./configure
+make
+sudo make install
+
+./configure: Checks your system for necessary tools and libraries, adjusting its internal settings to match your environment.
+make: Compiles the code using instructions in the Makefile.
+sudo make install: Installs the compiled code into the system directories.
+
+Additional Notes:
+
+- Dependencies:
+Software may rely on other software (dependencies) to run.
+Dependencies should be installed before compiling and installing the new software.
+
+- Version Control:
+Ensure you're installing a stable and secure version of the software.
+Always look for official documentation or repositories for reliable source code and installation instructions.
+
+- Uninstallation/Upgrade:
+Manual installation (compiling from source) often does not provide a straightforward way to 
+uninstall or upgrade the software. For this, software managers like apt, yum, or zypper (depending on your distribution) 
+are advantageous since they manage versions and uninstallation cleanly.
