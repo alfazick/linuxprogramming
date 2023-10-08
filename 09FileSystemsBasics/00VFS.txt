@@ -1,0 +1,106 @@
+Virtual File System (VFS) is a software layer in the kernel 
+that provides a common interface to various kinds of file systems. 
+VFS allows the operating system to access different types of file systems 
+in a uniform way. It facilitates the integration of various file systems 
+seamlessly into the Linux environment.  
+
+How  VFS works and its functionalities:
+
+Core Concepts
+File system independence: It provides a mechanism to support multiple 
+file systems transparently, including ext4, XFS, NFS, etc.
+
+Common file model: It creates a common file model that represents 
+all supported file systems to allow applications and system services 
+to work with different file systems transparently.
+
+Components of VFS
+Superblock Object: It holds information about a mounted file system.
+
+Inode Object: It represents an individual file in a file system. 
+Each file has a unique inode that stores metadata like file permissions, 
+ownership, etc.
+
+File Object: It represents an open file and maintains the status of the file, 
+including current file position, access modes, etc.
+
+Dentry Object: It connects inodes to filenames and represents 
+a cache of directory entries to speed up lookups.
+
+Major Interfaces of VFS
+
+System Calls: VFS implements system calls like open, read, write, close, 
+etc., to work with files and directories.
+
+File Operations: This is a set of operations (functions pointers) 
+for working with files, including opening files, reading data from files,
+writing data to files, etc.
+
+Inode Operations: This set of operations is for working with inodes, 
+including creating new files, deleting files, looking up files in directories, 
+etc.
+
+Superblock Operations: These operations work on file system superblocks, 
+including mounting and unmounting file systems, getting statistics about 
+file systems, etc.
+
+Address Space Operations: These are operations on file memory mappings, 
+and they deal with memory-mapped files and page cache management.
+
+VFS Workflow
+Mounting a Filesystem: 
+When a file system is mounted, VFS initializes a superblock object 
+representing that file system.
+
+File Operations: 
+When a system call is made to work with files (like opening a file), 
+VFS invokes the appropriate file operations defined by the 
+specific file system through the VFS interface.
+
+Path Resolution: 
+VFS resolves file paths by traversing the directory entry 
+(dentry) cache to find the inode associated with a filename.
+
+Buffered I/O and Caching: 
+VFS employs caching mechanisms to speed up file system access, 
+including the dentry cache for directory entries and the page cache 
+for file data.
+
+Advantages of VFS
+
+Uniformity: It provides a uniform interface to different types of file systems,
+simplifying user and application interactions with files.
+
+Extensibility: New file systems can be added to the Linux kernel easily, 
+as they just need to implement the VFS interfaces.
+
+Performance: Through caching mechanisms, it can enhance the performance of 
+file system access.
+
+Only reason example is in Java, because it uses interface word explicitly.
+In Rust it's called Trait.
+In CPP, similar idea can be implemented with abstract classes.
+
+
+Refer to VFSIDEA.java file as a starter. 
+
+In the above example:
+
+The VFS interface defines a set of methods that correspond to file operations.
+
+The Ext4 and XFS classes implement the VFS interface, 
+each providing its own specific implementations for the file operations.
+
+In the main function, we instantiate Ext4 and XFS objects 
+(representing file systems) and work with them through the VFS interface. 
+This shows how you can work with different file systems 
+through a common interface, similar to how the VFS in Linux allows 
+you to work with different file systems through a common set of system calls.
+
+This Java example abstractly represents the concept of how VFS and 
+different filesystems interact in the Linux kernel, 
+albeit in a much simplified form. 
+
+It illustrates the underlying principle of using a common interface 
+to work with different implementations, reflecting the abstraction 
+mechanism employed in VFS.
