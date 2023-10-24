@@ -35,8 +35,6 @@ Objective: Download a file and save it as example.txt.
 Commands:
 To download the HTML content of google.com using curl and save it to a file called google.html, you can use the following command:
 
-bash
-Copy code
 curl -o google.html http://www.google.com
 
 This will fetch the HTML content from Google's homepage and save it to a file named google.html in the 
