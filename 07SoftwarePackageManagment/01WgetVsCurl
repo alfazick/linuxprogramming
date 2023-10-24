@@ -1,0 +1,97 @@
+both wget and curl are command-line tools used for downloading files from the internet but they have different capabilities and syntax. 
+Here's a basic comparison:
+
+Downloading a Single File:
+
+wget:
+
+wget http://example.com/file.iso
+Explanation: This will download the file named "file.iso" from the specified URL.
+
+curl:
+
+curl -O http://example.com/file.iso
+Explanation: The -O (capital o) flag tells curl to write the downloaded data to a file named as the remote file's name.
+
+Downloading and Saving with a Different File Name:
+
+wget:
+
+wget -O custom_name.iso http://example.com/file.iso
+Explanation: The -O (capital o) option allows you to specify a different file name or location.
+
+curl:
+
+curl -o custom_name.iso http://example.com/file.iso
+Explanation: The -o (lowercase o) option allows you to specify a different file name or location.
+
+Downloading Multiple Files:
+
+wget:
+
+wget -i urls.txt
+Explanation: The -i option tells wget to read URLs from a file, one per line.
+
+curl:
+
+xargs -n 1 curl -O < urls.txt
+Explanation: curl doesn't natively support downloading from a list of URLs, so you can use xargs to read URLs from a file. 
+xargs reads items from the standard input, delimited by blanks or newlines, 
+and executes the command one or more times with any initial arguments.
+
+Resume a Broken Download:
+
+wget:
+
+wget -c http://example.com/file.iso
+Explanation: The -c or --continue flag makes wget attempt to resume the download of a file 
+if it detects that the file has partially downloaded.
+
+curl:
+
+curl -C - -O http://example.com/file.iso
+Explanation: The -C - option tells curl to automatically find out 
+where/how to resume the transfer. 
+It then uses the -O option to write out the downloaded data.
+
+Sending Headers with Request:
+
+wget:
+
+wget --header="Header-Name: value" http://example.com
+Explanation: The --header option allows you to send a custom header in the request.
+
+curl:
+
+curl -H "Header-Name: value" http://example.com
+Explanation: The -H option allows you to send a custom header in the request.
+
+Both wget and curl have many more options and capabilities. You can explore more details in their man pages (man wget or man curl). 
+While wget is typically used for downloading files (it can recursively download files), curl provides a more powerful set of features, 
+including the ability to communicate with different protocols, method requests, and even work as a REST client.
+
+Extra:
+example using a free API from CoinGecko which provides Bitcoin price data. 
+Please note that the availability and behavior of the API can change over time, 
+so this example may not always work indefinitely.
+
+
+Using wget:
+wget is less commonly used for API interaction because it's primarily a file downloader. 
+However, it can still be used for simple API requests. Here's how you might use wget with the CoinGecko API:
+
+wget -qO- --header='accept: application/json' 'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd'
+
+In this example, -q is for quiet mode (not showing progress), O- is to print the content to standard output rather than a file, 
+and --header='accept: application/json' is to send the specified header, indicating that we expect a JSON response.
+
+Using curl:
+Here's how you might use curl to make a request to the CoinGecko API to retrieve the current price of Bitcoin in US Dollars:
+
+curl -X 'GET' \
+  'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd' \
+  -H 'accept: application/json'
+This command uses curl to send an HTTP GET request to the specified URL. 
+The -X 'GET' specifies the request method to use when communicating with the HTTP server. 
+The -H 'accept: application/json' specifies an extra header to include in the request when sending HTTP to a server, 
+which in this case is to accept JSON response.
