@@ -1,0 +1,64 @@
+Practical Lab: Basic File Encryption and Decryption on Linux
+
+Objective:
+Understand basic file encryption and decryption using OpenSSL on Linux.
+Securely manage sensitive information.
+
+Requirements:
+Basic knowledge of the Linux command line.
+A Linux environment (physical or virtual machine).
+OpenSSL installed on your system.
+
+Task:
+Encrypt a text file using OpenSSL.
+Decrypt the file and verify the content.
+
+
+Steps:
+Step 1: Prepare the Environment
+Open your Linux terminal.
+Ensure OpenSSL is installed by running openssl version. 
+If not installed, you can install it using your package manager, 
+for instance: sudo apt-get install openssl (for Debian/Ubuntu systems).
+
+Step 2: Create a Text File
+Create a text file with some content to encrypt.
+
+echo "This is secret information" > secret.txt
+
+Step 3: Encrypt the File
+Encrypt the secret.txt file using OpenSSL with symmetric encryption (AES).
+
+openssl enc -aes-256-cbc -salt -in secret.txt -out secret.txt.enc
+
+During this step, OpenSSL will ask you to provide a password 
+which will be used to generate a key for encryption. Keep the password in a secure place 
+– if you lose it, the encrypted data cannot be recovered.
+
+Step 4: Verify Encryption
+Ensure that the content of secret.txt.enc is not human-readable.
+
+cat secret.txt.enc
+
+
+Step 5: Decrypt the File
+Decrypt the file back into its original format using OpenSSL.
+
+openssl enc -aes-256-cbc -d -in secret.txt.enc -out secret_decrypted.txt
+
+You’ll be prompted to enter the password used during the encryption process.
+
+Step 6: Validate Decryption
+Verify that secret_decrypted.txt and secret.txt have identical content.
+
+cat secret_decrypted.txt
+
+Notes:
+Make sure you securely manage the passwords/keys used during encryption.
+Always ensure you have backups of data and understand the encryption/decryption process 
+before applying it to important files.
+
+This example uses symmetric-key encryption where the same password is used for 
+both encryption and decryption. 
+In real-world scenarios, asymmetric encryption or a hybrid approach often 
+provides stronger security.

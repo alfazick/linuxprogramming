@@ -1,0 +1,66 @@
+
+Lab Scenario
+Alice wants to send Bob a confidential message. 
+To ensure that only Bob can read the message, Alice will encrypt it using Bob's public key. 
+Bob will then decrypt it using his private key.
+
+Prerequisites
+
+Basic knowledge of the Linux command line
+OpenSSL installed on Linux
+
+Step 1: Key Generation
+Bob generates an RSA key pair, consisting of a public and private key.
+
+# Generate private key
+openssl genpkey -algorithm RSA -out bob_private_key.pem
+
+# Extract public key
+openssl rsa -pubout -in bob_private_key.pem -out bob_public_key.pem
+
+Bob shares bob_public_key.pem with Alice but keeps bob_private_key.pem secret.
+
+Step 2: Encryption
+Alice encrypts her message using Bob's public key.
+
+First, Alice writes her message to a file.
+
+echo "Hello, Bob! This is a secret message from Alice." > alice_message.txt
+
+Next, Alice encrypts the message using Bob's public key.
+
+openssl rsautl -encrypt -pubin -inkey bob_public_key.pem -in alice_message.txt -out encrypted_message.bin
+Alice sends encrypted_message.bin to Bob.
+
+Step 3: Decryption
+Bob decrypts the received message using his private key.
+
+openssl rsautl -decrypt -inkey bob_private_key.pem -in encrypted_message.bin -out decrypted_message.txt
+Bob can now read the original message from Alice by viewing decrypted_message.txt.
+
+cat decrypted_message.txt
+
+Lab Notes
+
+The encryption and decryption steps are abstracted for educational clarity. 
+In real-world applications, asymmetric encryption is typically used to encrypt a symmetric key, 
+which in turn is used to encrypt the actual message/data. 
+
+This approach melds the security advantages of asymmetric encryption with 
+the computational efficiency of symmetric encryption.
+
+Key management, storage, and exchange should be handled with utmost security in mind to prevent 
+unauthorized access or leakage.
+
+For larger messages, consider using asymmetric encryption to encrypt a symmetric key and 
+then using symmetric encryption for the actual message to optimize for computational efficiency.
+
+Conclusion
+Through this lab, you’ve observed the utility of asymmetric encryption 
+in securing communications without necessitating the secure exchange of secret keys. 
+Bob and Alice successfully communicated securely: Alice encrypted a message that only Bob could 
+decrypt with his private key. This paradigm underpins numerous secure communication protocols 
+on the internet and beyond.
+
+Feel free to explore variations of this lab to deepen your understanding of 
+encryption and decryption processes!

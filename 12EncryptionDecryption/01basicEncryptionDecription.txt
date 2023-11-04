@@ -1,0 +1,89 @@
+Practical Lab: Basic Encryption and Decryption with Python
+Objective:
+Understand the fundamental concept of encryption and decryption.
+Implement a simple substitution cipher using Python.
+Requirements:
+Basic knowledge of Python programming.
+Python installed on your machine.
+Task:
+Create a Python program that:
+
+Takes user input as plaintext.
+Encrypts the plaintext into ciphertext using a substitution cipher.
+Decrypts the ciphertext back into the original plaintext.
+
+
+Steps:
+
+Step 1: Input Data
+Take a user input string that needs to be encrypted.
+
+plaintext = input("Enter text to encrypt: ")
+
+
+Step 2: Create a Substitution Cipher
+Develop a simple substitution cipher. Here we'll shift each letter by a fixed number of positions in the alphabet.
+
+def encrypt(plain_text, shift):
+    encrypted_text = ""
+    for char in plain_text:
+        if char.isalpha():  # Check if the character is an alphabet
+            shifted = ord(char) + shift  # Shift the character
+            # Check if uppercase or lowercase and rotate if it goes beyond A-Z or a-z
+            if char.isupper():
+                encrypted_text += chr((shifted - 65) % 26 + 65)
+            else:
+                encrypted_text += chr((shifted - 97) % 26 + 97)
+        else:
+            encrypted_text += char  # if it's not an alphabet, add it without encryption
+    return encrypted_text
+
+
+Step 3: Encrypt User Input
+Encrypt the user input using the substitution cipher.
+
+shift_value = 3  # Shifting each letter by 3 positions
+ciphertext = encrypt(plaintext, shift_value)
+print("Encrypted Text: ", ciphertext)
+
+
+Step 4: Decryption Function
+Implement a function to decrypt the ciphertext back into plaintext by reversing the shift applied during the encryption.
+
+def decrypt(encrypted_text, shift):
+    decrypted_text = ""
+    for char in encrypted_text:
+        if char.isalpha():
+            shifted = ord(char) - shift
+            if char.isupper():
+                decrypted_text += chr((shifted - 65) % 26 + 65)
+            else:
+                decrypted_text += chr((shifted - 97) % 26 + 97)
+        else:
+            decrypted_text += char
+    return decrypted_text
+
+
+
+Step 5: Decrypt Ciphertext
+Decrypt the ciphertext and validate the result by comparing it to the original user input.
+
+decrypted_text = decrypt(ciphertext, shift_value)
+print("Decrypted Text: ", decrypted_text)
+
+Test:
+Run the program and enter a plaintext input when prompted.
+Verify the encryption and decryption by checking the displayed ciphertext and decrypted text.
+Change the shift_value and observe how the ciphertext changes.
+
+Notes:
+This is a very basic form of encryption (Caesar Cipher) and not suitable for secure communications 
+in real-world applications.
+Modern encryption uses complex algorithms and keys to secure data.
+Always employ established encryption libraries and methods for handling sensitive data.
+
+Wrap-up:
+This lab provides a foundational understanding of the encryption and decryption processes 
+using Python programming. Ensure to delve deeper into more advanced cryptographic methods and 
+libraries like cryptography in Python for a thorough comprehension and 
+practical knowledge of data security.

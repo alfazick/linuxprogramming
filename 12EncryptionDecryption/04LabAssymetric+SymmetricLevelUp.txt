@@ -1,0 +1,76 @@
+Lab: Utilizing Asymmetric Encryption to Secure Symmetric Keys
+Objective:
+Understand the usage of asymmetric encryption in securing symmetric key transmission, 
+combining security with computational efficiency.
+
+Tools Required:
+
+OpenSSL on Linux
+
+Tasks:
+Generate Asymmetric Key Pair
+Generate Private Key:
+
+openssl genpkey -algorithm RSA -out private_key.pem
+
+Generate Public Key:
+
+openssl rsa -pubout -in private_key.pem -out public_key.pem
+
+
+Generate and Encrypt Symmetric Key
+
+Generate a Symmetric Key:
+
+openssl rand -base64 32 > symmetric_key.key
+
+Encrypt the Symmetric Key with the Public Key:
+
+openssl rsautl -encrypt -inkey public_key.pem -pubin -in symmetric_key.key -out encrypted_symmetric_key.key
+
+Note: Only someone with the private key can decrypt the symmetric key.
+
+Encrypt Message using Symmetric Key
+
+echo "This is a confidential message" > message.txt
+
+Encrypt the Message using Symmetric Key:
+
+openssl enc -aes-256-cbc -salt -in message.txt -out message.enc -pass file:symmetric_key.key
+
+Share message.enc and encrypted_symmetric_key.key
+
+Decrypt Symmetric Key using Asymmetric Encryption
+
+Decrypt Symmetric Key:
+
+openssl rsautl -decrypt -inkey private_key.pem -in encrypted_symmetric_key.key -out decrypted_symmetric_key.key
+
+Decrypt Message using Decrypted Symmetric Key
+
+Decrypt the Message:
+
+openssl enc -d -aes-256-cbc -in message.enc -out decrypted_message.txt -pass file:decrypted_symmetric_key.key
+
+Check if decrypted_message.txt matches the original message:
+
+cat decrypted_message.txt
+
+Notes:
+
+Asymmetric Encryption Usage: For securing the transmission of the symmetric key.
+Symmetric Encryption Usage: For efficiently encrypting the actual message.
+
+Explanation:
+Asymmetric Key Pair: Private key remains confidential, while the public key can be shared.
+
+Symmetric Key: Provides computational efficiency in encrypting and decrypting messages, 
+especially for larger data.
+
+Combining Asymmetric and Symmetric: The symmetric key is secured with asymmetric encryption for transmission, 
+thus providing a balance between security and efficiency.
+
+This lab illustrates a practical usage of asymmetric and symmetric encryption in ensuring secure and 
+computationally efficient communication. It's pivotal to note that in real-world applications, 
+additional considerations regarding key management, integrity checks, and secure channels are vital and 
+should be implemented in accordance with best practices.
