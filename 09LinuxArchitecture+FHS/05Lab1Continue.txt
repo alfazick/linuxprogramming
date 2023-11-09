@@ -87,6 +87,13 @@ ls -l /proc/[PID]/fd
 
 The temporary file descriptor should no longer appear in the list.
 
+Deliverables
+Submit the following screenshots as your lab deliverables:
+
+Screenshot showing the PID of the cpu_load_simulator.py script.
+Screenshot showing the symlink in the /proc/[PID]/fd directory pointing to the /tmp/ directory.
+Screenshot showing the contents of the temporary file.
+Screenshot of the log entries corresponding to the script execution.
 
 Final Steps:
 
