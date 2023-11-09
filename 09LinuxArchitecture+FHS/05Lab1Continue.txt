@@ -1,0 +1,99 @@
+# cpu_load_simulator.py
+import threading
+import time
+import tempfile
+import syslog
+
+# Function to simulate CPU intensive task
+def cpu_intensive_task():
+    while True:
+        # Perform a calculation that uses CPU resources
+        [x**2 for x in range(10000)]
+
+# Create and start multiple threads to increase CPU load
+def create_load(threads=4):
+    syslog.syslog(syslog.LOG_INFO, f"Simulating high CPU load with {threads} threads.")
+    for _ in range(threads):
+        thread = threading.Thread(target=cpu_intensive_task)
+        thread.daemon = True  # allows thread to exit when main thread exits
+        thread.start()
+
+# Run the function to create CPU load
+if __name__ == "__main__":
+    try:
+        # You can change the number of threads to increase or decrease the load
+        create_load(threads=8)
+
+        # Demonstrate creating a temporary file
+        with tempfile.NamedTemporaryFile() as temp_file:
+            syslog.syslog(syslog.LOG_INFO, f"Created temporary file at {temp_file.name}")
+            # Keep the program running
+            while True:
+                time.sleep(1)
+    except KeyboardInterrupt:
+        syslog.syslog(syslog.LOG_INFO, "Load simulation stopped by user.")
+
+
+Open two terminals to follow along.
+
+
+Running the Script:
+Create and Execute the cpu_load_simulator.py script in your terminal. 
+This will start the process and begin the simulation.
+
+Identifying the Process ID (PID):
+To find the process ID of your script, use the following command:
+
+ps aux | grep cpu_load_simulator.py
+The PID will be listed in the output, typically the second column.
+
+Accessing the Temporary File:
+Use the PID to list all the open files associated with the process:
+
+ls -l /proc/[PID]/fd
+
+In the output, look for a symlink that points to a file within /tmp/. This is your temporary file.
+
+Viewing the Temporary File's Contents:
+To read the contents of the temporary file:
+
+cat /proc/[PID]/fd/[FD_NUMBER]
+Replace [FD_NUMBER] with the file descriptor number for the temporary file.
+
+Viewing Logs:
+Check the logs to confirm the script is executing as expected:
+
+tail -f /var/log/syslog
+
+tail -f /var/log/messages
+
+These commands will continuously output the log file contents. 
+Look for entries from your script.
+
+Cleaning Up:
+Once you're ready to stop the simulation:
+
+First, terminate the script by pressing Ctrl+C in the terminal where it's running.
+If that doesn't work, kill the process using:
+
+kill [PID]
+Replace [PID] with the actual process ID you identified earlier.
+
+Confirming Cleanup:
+
+After killing the process, check that the temporary file has been removed by listing the open files again:
+
+ls -l /proc/[PID]/fd
+
+The temporary file descriptor should no longer appear in the list.
+
+
+Final Steps:
+
+If you've used tail -f to view the logs, you can stop the command by pressing Ctrl+C.
+Review the logs to see the final messages from your script, 
+confirming that it has stopped and cleaned up the temporary file.
+
+Remember, the temporary file should be automatically cleaned up by the NamedTemporaryFile 
+mechanism when the script exits properly. If not, and the file is still present, 
+you may need to remove it manually using the file path found earlier. 
