@@ -1,0 +1,105 @@
+
+
+
+Command ifconfig allows you to learn your local IP address
+look for eth0: inet you should see IPv4
+
+
+Setup ftp server on a fly using Python inside folder in Linux
+python3 -m http.server
+
+
+Obtain a file from an ftp server
+wget http://IP_ADDRESS_OF_FTP_SERVER:8000/path/to/your/file
+
+Ok now is assignment
+On server side
+Create an textfile,containing a message you plan to encode 
+
+
+Then run decode 
+python3 decode.py
+
+def encrypt(plain_text, shift):
+    encrypted_text = ""
+    for char in plain_text:
+        if char.isalpha():
+            shifted = ord(char) + shift
+            if char.isupper():
+                encrypted_text += chr((shifted - 65) % 26 + 65)
+            else:
+                encrypted_text += chr((shifted - 97) % 26 + 97)
+        else:
+            encrypted_text += char
+    return encrypted_text
+
+def main():
+    filename = input("Enter filename to encrypt: ")
+    shift = int(input("Enter shift value: "))
+
+    try:
+        with open(filename, 'r') as file:
+            plaintext = file.read()
+            ciphertext = encrypt(plaintext, shift)
+
+        with open(filename + "_encoded", 'w') as file:
+            file.write(ciphertext)
+            print(f"Encoded file saved as {filename}_encoded")
+    except FileNotFoundError:
+        print("File not found. Please check the filename and try again.")
+
+if __name__ == "__main__":
+    main()
+
+run ftp server where that encrypted file is located 
+
+
+
+On client side 
+get the encrypted file
+
+then run
+encode.py
+
+def decrypt(encrypted_text, shift):
+    decrypted_text = ""
+    for char in encrypted_text:
+        if char.isalpha():
+            shifted = ord(char) - shift
+            if char.isupper():
+                decrypted_text += chr((shifted - 65) % 26 + 65)
+            else:
+                decrypted_text += chr((shifted - 97) % 26 + 97)
+        else:
+            decrypted_text += char
+    return decrypted_text
+
+def main():
+    filename = input("Enter text filename to decrypt: ")
+    shift = int(input("Enter shift value: "))
+
+    try:
+        with open(filename, 'r') as file:
+            ciphertext = file.read()
+            plaintext = decrypt(ciphertext, shift)
+
+        with open(filename + "_decoded", 'w') as file:
+            file.write(plaintext)
+            print(f"Decoded file saved as {filename}_decoded")
+    except FileNotFoundError:
+        print("File not found. Please check the filename and try again.")
+
+if __name__ == "__main__":
+    main()
+
+
+Usage Instructions:
+On the Server Side (encode.py): Run this script to encrypt a file. It will ask for the filename and the shift value. 
+The encrypted file will be saved with _encoded added to the original filename.
+
+On the Client Side (decode.py): Run this script to decrypt a file. It will ask for the filename of the encrypted file and the shift value used for encryption. 
+The decrypted file will be saved with _decoded added to the original filename.
+
+These scripts use a simple substitution cipher for encryption and decryption. 
+Please note that this method is not secure for sensitive or critical data encryption in real-world scenarios.
+
