@@ -18,7 +18,7 @@ Create an textfile,containing a message you plan to encode
 
 
 Then run decode 
-python3 decode.py
+python3 encrypt.py
 
 def encrypt(plain_text, shift):
     encrypted_text = ""
@@ -59,7 +59,7 @@ On client side
 get the encrypted file
 
 then run
-encode.py
+decrypt.py
 
 def decrypt(encrypted_text, shift):
     decrypted_text = ""
