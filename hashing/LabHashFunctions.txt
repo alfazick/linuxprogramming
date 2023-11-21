@@ -1,0 +1,124 @@
+
+Key idea: One way encryption.
+
+
+Lab Title: Understanding Hash Functions in Linux
+Objective:
+To understand the concept of hashing and how it ensures data integrity and security by using various hash functions in a Linux environment.
+
+Requirements:
+A computer with Linux operating system installed (any popular distribution like Ubuntu, Fedora, etc.)
+Terminal access with permissions to install software if needed
+Internet access (optional, for checking hash values against online databases)
+
+Lab Activity:
+
+Part 1: Exploring Hash Functions
+
+Introduction to Hashing Tools:
+
+Open the terminal.
+Ensure you have md5sum, sha256sum, and other hashing tools installed. 
+You can install them using your distribution's package manager, for example, sudo apt install coreutils.
+Creating a Test File:
+
+Use echo "This is a test file for hashing." > testfile.txt to create a simple text file.
+
+View the contents of the file using cat testfile.txt.
+
+Generating MD5 Hash:
+Run md5sum testfile.txt to generate the MD5 hash of the file.
+Note the MD5 hash value output.
+
+Generating SHA-256 Hash:
+Run sha256sum testfile.txt to generate the SHA-256 hash of the file.
+Note the SHA-256 hash value output.
+
+Part 2: Verifying Data Integrity
+
+Modifying the Test File:
+Edit the file by using echo "This file has been modified." >> testfile.txt.
+Generate the hashes again for the modified file with md5sum and sha256sum.
+
+Comparing Hash Values:
+
+Compare the new hash values with the ones you noted earlier.
+Discuss why the hash values are different after modifying the file content.
+
+Part 3: Simulating Data Tampering
+
+Detecting Changes in Files:
+Create a copy of the original file cp testfile.txt backupfile.txt.
+Generate and note the hash of backupfile.txt.
+Tamper with backupfile.txt by adding new text.
+Generate the hash again and compare it with the original hash to see if the tampering is detected.
+
+Part 4: Using Hashes for Security Analysis
+
+Checking Against Known Hash Values:
+
+
+Security practitioners could use the hash values to compare files against known malicious ones 
+( use an online virus database to compare hash values).
+
+
+
+Conclusion:
+Reflect on how hash functions can detect even the slightest changes in data and 
+this characteristic is crucial for maintaining data integrity. 
+
+
+Importance of choosing strong hash functions to prevent collisions and ensure security.
+
+Extension Activity:
+
+Explore how hash functions are used in password storage 
+
+
+Lab Extension: Comparing Hashes with Known Virus Databases
+Objective:
+To demonstrate how hash values can be used to identify potentially malicious files by comparing them against known virus hash databases.
+
+Prerequisites:
+Completion of the initial lab activities as described previously.
+Ensure you have internet access to reach online virus hash databases.
+
+
+Activity Steps:
+Understanding Virus Hash Databases:
+
+Discuss the purpose of virus hash databases and how they are used in the industry.
+services like VirusTotal, which allow users to check files against multiple antivirus databases.
+
+
+Finding a Sample Hash:
+
+
+Using VirusTotal for Hash Checking:
+
+Navigate to the VirusTotal website.
+Enter the sample hash into the search bar of VirusTotal and analyze the report to understand how the information is presented.
+Generating Hash for Comparison:
+
+Use the sha256sum command on your test file to generate a new SHA-256 hash.
+Copy the hash value.
+Comparing the Hash on VirusTotal:
+
+Paste the hash value into VirusTotal's search bar and run the search.
+
+Observe whether any antivirus tools have flagged the file as malicious based on the hash.
+Note that for your test file, there should be no matches, but if you used a sample hash from a known malware, you would see a match.
+
+Interpreting the Results:
+
+Match can indicate that a file is potentially malicious.
+
+
+The significance of having up-to-date virus hash databases.
+The limitations of hash-based malware detection (e.g., zero-day malware, hash collisions, etc.).
+
+
+Conclusion:
+This exercise should solidify the understanding that hash functions can be powerful tools in identifying known threats by using databases 
+that catalog the hash values of identified malware. It also brings awareness to the limitations and the necessity for other layers of security.
+
