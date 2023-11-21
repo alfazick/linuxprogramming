@@ -16,6 +16,15 @@ Part 1: Setting Up the Flask Application
 pip install flask
 
 
+!!! If you do that project on repl.it
+make sure to update 2 lines in 
+.replit -> configuration file
+
+entrypoint = "app.py"
+[deployment]
+run = ["python3", "app.py"]
+deploymentTarget = "cloudrun"
+
 1.2 Create a new folder for your project, e.g., flask_hashing_lab.
 
 1.3 Inside the project folder, create the following structure:
