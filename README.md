@@ -20,6 +20,10 @@
 
 **10 FileSystemsBasics -> Ready**
 
-**10 Processes and Services -> In-progress**
-
 **12 Encryption and Decryption -> Ready**
+
+**13 Hashing -> Ready**
+
+**14 Processes and Services -> In-progress**
+
+
