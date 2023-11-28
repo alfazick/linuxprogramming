@@ -15,8 +15,6 @@ Advanced Process Management Commands
 ps: Explores active processes.
 top: Real-time system monitoring.
 kill: Signal-based process management.
-pstree: Visualizing process hierarchy.
-vmstat: Monitoring virtual memory, processes, and system performance.
 
 Daemon Processes: The Silent Workers
 Daemon processes run in the background, performing critical system tasks.
@@ -28,11 +26,8 @@ Process Priority: Nice and Renice
 Adjusting process priority using nice and renice for resource allocation.
 
 Conclusion: The Big Picture in Process Management
-Reflect on the importance of process management in Linux.
 
 Tables for Quick Reference
-
-
 Table 1: Process States in Linux
 State	Description
 Running	Executing or ready to execute.
@@ -51,6 +46,37 @@ Signal Number	Signal Name	Description
 17, 19, 23	SIGSTOP	Stop a process, pause it.
 18, 20, 24	SIGCONT	Continue if stopped, resume process.
 
+Using kill to Send SIGSTOP and SIGCONT
+Sending SIGSTOP: This signal pauses a process. To send SIGSTOP to a process with a specific PID:
+
+kill -SIGSTOP [PID]
+Or, using the typical signal number (19 in many systems):
+
+kill -19 [PID]
+Sending SIGCONT: This signal resumes a process that has been paused. To send SIGCONT to a process:
+
+kill -SIGCONT [PID]
+Or, using the signal number (18 in many systems):
+
+kill -18 [PID]
+
+Examples
+To pause a process with PID 1234:
+
+kill -SIGSTOP 1234
+To resume the same process:
+
+kill -SIGCONT 1234
+
+Important Notes
+Check Signal Numbers: The actual numbers assigned to SIGSTOP and SIGCONT can vary. 
+To see the list of signals and their corresponding numbers on your system, you can use kill -l.
+
+Cannot Ignore or Handle: SIGSTOP and SIGKILL are unique in that they cannot be caught, ignored, or handled by the process. They are directly handled by the kernel.
+
+Use with Caution: Pausing and resuming processes can impact system behavior, especially if these processes are critical to system operation. Use these signals carefully.
+
+This approach allows you to effectively manage process states without terminating them, providing a means for temporary suspension and subsequent resumption.
 
 => kill Command
 Usage: kill sends a specified signal to a process or a group of processes. The most common use is to terminate processes.
