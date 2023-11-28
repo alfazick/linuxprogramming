@@ -1,0 +1,218 @@
+Processes 101: Comprehensive Guide on Linux Process Management
+
+Theoretical Framework
+
+Introduction: The Essence of Processes in Linux
+Processes in Linux are instances of executing programs, critical in multitasking and multi-user environments.
+
+Process States: Understanding the Lifecycle
+Processes can be in states such as Running, Waiting (Interruptible and Uninterruptible), Stopped, and Zombie.
+
+Process Hierarchy and Identification
+Discussion on parent and child processes, Process IDs (PIDs), and Parent Process IDs (PPIDs).
+
+Advanced Process Management Commands
+ps: Explores active processes.
+top: Real-time system monitoring.
+kill: Signal-based process management.
+pstree: Visualizing process hierarchy.
+vmstat: Monitoring virtual memory, processes, and system performance.
+
+Daemon Processes: The Silent Workers
+Daemon processes run in the background, performing critical system tasks.
+
+Managing Foreground and Background Processes
+Strategies for toggling between foreground and background using bg, fg, and &.
+
+Process Priority: Nice and Renice
+Adjusting process priority using nice and renice for resource allocation.
+
+Conclusion: The Big Picture in Process Management
+Reflect on the importance of process management in Linux.
+
+Tables for Quick Reference
+
+
+Table 1: Process States in Linux
+State	Description
+Running	Executing or ready to execute.
+Waiting (Interruptible)	Waiting for an event or resource, interruptible.
+Waiting (Uninterruptible)	Waiting, not interruptible.
+Stopped	Halted, can be restarted.
+Zombie	Finished, waiting for parent to read its exit status.
+
+
+Table 2: Common Linux Signals
+Signal Number	Signal Name	Description
+1	SIGHUP	Hangup detected, reload process.
+2	SIGINT	Interrupt from keyboard, terminate process.
+9	SIGKILL	Kill signal, forcefully terminate process.
+15	SIGTERM	Termination signal, stop process gracefully.
+17, 19, 23	SIGSTOP	Stop a process, pause it.
+18, 20, 24	SIGCONT	Continue if stopped, resume process.
+
+
+=> kill Command
+Usage: kill sends a specified signal to a process or a group of processes. The most common use is to terminate processes.
+Process Identification: It requires the Process ID (PID) to identify the process. PIDs are unique numeric identifiers assigned by the operating system to each process.
+
+Flexibility in Signals: kill can send different types of signals to processes, not just the signal to terminate. For example, SIGTERM (graceful stop), SIGKILL (forceful stop), SIGSTOP (pause), among others.
+
+Example: To terminate a process with PID 1234, you would use kill 1234. To forcefully terminate it, you would use kill -9 1234.
+
+=> killall Command
+Usage: killall is used to terminate all processes running with a specified name. It's a more convenient way to stop multiple instances of a process without needing to know their PIDs.
+
+Process Identification: It uses the name of the process (the command used to start it) rather than the PID.
+
+Less Flexibility in Signals: Like kill, killall can also send different signals, but it's more commonly used to terminate all instances of a process.
+
+Risk: Because it targets processes by name, there's a higher risk of terminating unintended processes, especially if the process name is common or not unique.
+
+Example: To terminate all processes named myapp, you would use killall myapp.
+
+Summary
+kill is precise and targets specific processes identified by their PIDs. It's safer when you want to be sure you're only affecting a particular process.
+
+killall is more convenient when you want to stop all processes with a certain name but comes with the risk of affecting more than intended if the name is not unique or is used by multiple applications.
+
+Both commands are powerful tools in process management and should be used with caution to avoid unintended system disruptions.
+
+Practical Lab: Linux Process Management
+Lab Preparation
+Ensure a Linux environment with Python 3 and use nano or vim to create the following Python scripts.
+
+Lab Exercises with Python Scripts
+Input Wait Program (input_wait.py):
+
+input("Press Enter to continue...")
+
+
+
+Execution: Run python3 input_wait.py in a terminal. This script simply waits for user input, demonstrating a process in a waiting state.
+Infinite Loop Print Program (infinite_loop.py):
+
+import time
+i = 1
+while True:
+    print(i)
+    i += 1
+    time.sleep(1)
+Execution: Run python3 infinite_loop.py. This script prints numbers in an infinite loop.
+
+
+Signal Handling Program (signal_handling.py):
+
+import signal
+import time
+
+def signal_handler(signum, frame):
+    print("SIGTERM received, but not terminating")
+
+signal.signal(signal.SIGTERM, signal_handler)
+
+print("Running... (try to send SIGTERM)")
+while True:
+    time.sleep(1)
+
+Execution: Run python3 signal_handling.py. This script is designed to ignore SIGTERM signals, demonstrating custom signal handling.
+Process Creation Program (process_creation.py):
+
+import os
+import time
+
+pid = os.fork()
+
+if pid > 0:
+    print(f"Parent process (PID: {os.getpid()}), Child PID: {pid}")
+    os.wait()
+else:
+    print(f"Child process (PID: {os.getpid()}) running")
+    time.sleep(100)
+    print("Child process finishing")
+
+print("Process (PID: {}) completed".format(os.getpid()))
+Execution: Run python3 process_creation.py. This script creates a child process, which can be observed using system monitoring tools.
+
+
+Foreground and Background Process Management
+Using fg, bg, and &:
+Run any of the Python scripts.
+Use Ctrl+Z to stop (pause) the process and put it in the background.
+Use bg to continue running the process in the background.
+Use fg to bring a background process back to the foreground.
+
+Practical Demonstration:
+Run the infinite_loop.py script and practice moving it between foreground and background.
+
+Adjusting Process Priority
+Using nice and renice:
+Start a process with a specific niceness using nice -n [value] python3 script.py.
+Adjust the niceness of a running process with renice -n [value] -p [PID].
+
+Practical Demonstration:
+Experiment with different niceness values and observe the impact on CPU usage and process prioritization.
+Python Script for Calculating Fibonacci Sequence
+Save the following script as fibonacci.py:
+
+impimport sys
+import time
+
+def fibonacci(n):
+    if n <= 1:
+        return n
+    else:
+        return fibonacci(n-1) + fibonacci(n-2)
+
+if __name__ == "__main__":
+    if len(sys.argv) != 2:
+        print("Usage: python3 fibonacci.py [n]")
+        sys.exit(1)
+
+    n = int(sys.argv[1])
+    print(f"Calculating Fibonacci({n})")
+
+    start_time = time.time()
+    result = fibonacci(n)
+    end_time = time.time()
+
+    print(f"Result: {result}")
+    print(f"Execution Time: {end_time - start_time} seconds")
+
+
+Lab Instructions
+Part 1: Run Script with Default Priority
+
+Run the Script Normally:
+Open a terminal.
+Navigate to the directory containing fibonacci.py.
+Run the script: python3 fibonacci.py 35.
+Note the execution time.
+
+Part 2: Run Script with Modified Priority Using nice
+Run the Script with Increased Niceness:
+Use the nice command to start the script with a specific niceness value, e.g., 10: nice -n 10 python3 fibonacci.py 35.
+Note the execution time and compare it with the default run.
+
+
+Part 3: Modify Priority of Running Script Using renice
+Start the Script Normally:
+
+Run the script: python3 fibonacci.py 35 &.
+Note the Process ID (PID) given for this background process.
+Adjust the Niceness of the Running Process:
+
+Only root user can renice to negative value Highest Priority
+Use the renice command to change the niceness: renice -n 10 -p [PID].
+You can find the PID using jobs -l if needed.
+Wait for the script to finish and note the execution time.
+
+Observations and Analysis
+Students should observe the execution times under different niceness values.
+
+Note how higher niceness (lower priority) can affect the execution time, especially under different system load conditions.
+This lab setup provides a clear and practical demonstration of adjusting process priority using nice and renice commands in a real-world scenario.
+
+Conclusion
+This guide offers a blend of theoretical knowledge and practical skills in Linux process management. 
+Understanding these concepts and engaging in the lab exercises provides a comprehensive view of process behavior and control in Linux.
