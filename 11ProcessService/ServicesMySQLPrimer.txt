@@ -1,0 +1,281 @@
+Linux Service 
+Linux services, often referred to as "daemons" in Unix-like systems, 
+are background processes that typically start at boot time and 
+run continuously while the system is on. They provide various functionalities 
+that the system and the users can utilize. 
+
+Here are some key concepts and commands associated with services in Linux:
+Key Concepts
+Daemons: These are the background services that run on a Linux system, 
+often without direct user interaction. Examples include web servers, 
+file servers, and database servers.
+
+Systemd: Modern Linux distributions use systemd as an init system and service manager. 
+It is responsible for initializing the system and managing system processes after booting. 
+
+Service Management: Involves starting, stopping, enabling, disabling, and checking the status of services.
+
+Logs: Services generate logs, 
+which are crucial for troubleshooting and monitoring service performance and issues.
+
+Concept of Server-Client;
+When deploying a service, you may want to make it accessible for other users.
+
+Key Commands
+systemctl: The primary command to manage systemd services. Examples of usage include:
+
+systemctl start [service_name]: Start a service.
+systemctl stop [service_name]: Stop a service.
+systemctl restart [service_name]: Restart a service.
+systemctl status [service_name]: Check the status of a service.
+systemctl enable [service_name]: Enable a service to start on boot.
+systemctl disable [service_name]: Disable a service from starting on boot.
+
+
+journalctl: Used to view logs managed by systemd, particularly useful for troubleshooting.
+
+ps and top: Commands to view running processes, which can include active services.
+
+netstat and ss: Useful for checking network connections and ports, 
+which can help ascertain if network-based services are running correctly.
+
+Understanding and managing services is crucial for maintaining a healthy Linux system, 
+especially in server environments where these services are critical for day-to-day operations.
+
+Now we will observe how all works together 
+Lab1 Setting up a MySQL database on an Ubuntu-based machine and performing basic 
+CRUD (Create, Read, Update, Delete)  
+
+Lab2 then open port and make it accessible through our local network. 
+install a client and connect to Mysql server
+
+LAB1: Create MYSQL SERVER SERVICE ON OUR VM; 
+
+1. Installing MySQL Server on Ubuntu
+Update Package Index: Open a terminal and update your package index:
+
+sudo apt update
+
+Install MySQL Server:
+
+sudo apt install mysql-server
+
+Secure MySQL Installation: After installation, run the included security script. 
+This will set a password for the root user, remove anonymous users, 
+disallow root login remotely, and remove test databases.
+
+sudo mysql_secure_installation
+
+
+Check MySQL Service: Ensure that the MySQL service is running.
+
+systemctl status mysql.service
+
+
+2. Accessing MySQL Command Line
+
+Log into MySQL: As the root user, log into the MySQL shell. 
+You might be prompted for the password you set during the mysql_secure_installation step.
+
+sudo mysql -u root -p
+
+3. Creating a Database and Table
+Create a New Database: Let’s create a database named testdb.
+
+CREATE DATABASE testdb;
+
+Use the Database: Switch to the database you just created.
+
+USE testdb;
+
+Create a Table: Create a simple table named employees. 
+This table will have three columns: id, name, and position.
+
+
+CREATE TABLE employees (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100),
+    position VARCHAR(100)
+);
+
+
+4. CRUD Operations
+
+Create (Insert Data):
+
+INSERT INTO employees (name, position) VALUES ('John Doe', 'Software Engineer');
+INSERT INTO employees (name, position) VALUES ('Jane Smith', 'Project Manager');
+
+Read (Select Data):
+
+SELECT * FROM employees;
+
+
+Update (Modify Data):
+
+UPDATE employees SET position = 'Senior Software Engineer' WHERE name = 'John Doe';
+
+Delete (Remove Data):
+
+DELETE FROM employees WHERE name = 'Jane Smith';
+
+
+5. Exiting MySQL Shell
+
+Exit MySQL Shell: Once you are done with your operations, you can exit the MySQL shell by typing:
+
+EXIT;
+
+Lab2 Opening our Mysql Server to the world:) 
+Well in our case to our local network
+
+next steps involve creating a new MySQL user, 
+setting up MySQL to allow connections from other machines in the network, 
+and then connecting to the MySQL server from another machine to perform CRUD operations.
+
+Part 1: Creating a New MySQL User
+Log into MySQL as Root: 
+If you're not already in the MySQL shell, log in as the root user:
+
+sudo mysql -u root -p
+
+CREATE USER 'newuser'@'%' IDENTIFIED BY 'user_password';
+
+Grant Permissions: Grant all privileges to the new user on the testdb database.
+
+GRANT ALL PRIVILEGES ON testdb.* TO 'newuser'@'%';
+
+Apply Changes: Make the changes take effect.
+
+FLUSH PRIVILEGES;
+
+Exit MySQL Shell:
+
+EXIT;
+
+
+Part 2: Configuring MySQL to Allow Remote Connections
+Edit MySQL Configuration: Open the MySQL configuration file in a text editor. 
+For example, using nano:
+
+
+sudo nano /etc/mysql/mysql.conf.d/mysqld.cnf
+
+Change Bind Address: Find the line with bind-address and change its value to 0.0.0.0 
+to allow connections from all IP addresses, or specify a specific IP address 
+if you want to restrict access.
+
+bind-address = 0.0.0.0
+
+
+Restart MySQL Service: Apply the changes by restarting MySQL.
+
+sudo systemctl restart mysql.service
+
+Part 3: Connecting from Another Machine
+Install MySQL Client: On the other machine in your network 
+(assuming it's also running Ubuntu), 
+install the MySQL client.
+
+
+sudo apt update
+sudo apt install mysql-client
+
+Connect to the MySQL Server: Use the following command, 
+replacing server_ip, newuser, and user_password 
+with the appropriate values.
+
+(learn server ip address my running ifconfig, if not installed run
+sudo apt install net-tools)
+
+mysql -h server_ip -u newuser -p
+
+Execute CRUD Commands: Once connected, you can use the same CRUD commands 
+as before to interact with the testdb database.
+
+Extra Cleanup and Potential Security Issues:
+To delete a database in MySQL, you'll use the DROP DATABASE command. 
+This command will completely remove the database and all of its contents, 
+so be absolutely sure you want to delete it, as this action is irreversible.
+
+Here are the steps to delete a database:
+
+Log into MySQL: First, you need to log into the MySQL shell. 
+If you're using a MySQL root user, you can use the following command:
+
+
+sudo mysql -u root -p
+
+You'll be prompted to enter the password for the MySQL root user.
+
+Select the Database (Optional): 
+This step is more about double-checking that you're deleting the correct database.
+List all databases using:
+
+SHOW DATABASES;
+
+Find the database you want to delete in the list.
+
+Delete the Database: Use the DROP DATABASE command followed by the name of the database 
+you want to delete. Replace database_name with the name of your database:
+
+
+DROP DATABASE database_name;
+
+Be cautious with this command as it will delete the entire database and its data.
+
+Confirm Deletion (Optional): If you want to make sure the database has been deleted, 
+list all databases again:
+
+SHOW DATABASES;
+The deleted database should no longer appear in this list.
+
+Exit MySQL Shell: Once you're done, you can exit the MySQL shell:
+EXIT;
+
+To completely remove MySQL server and client, 
+and stop any currently running MySQL service on an Ubuntu-based system, 
+you will need to follow several steps. Here's a detailed guide:
+
+1. Stopping MySQL Service
+Before uninstalling MySQL, it's good practice to stop the service first.
+
+Stop MySQL Service:
+
+sudo systemctl stop mysql
+
+2. Uninstalling MySQL Server
+To remove MySQL server from your system, you will use the apt package manager.
+
+Uninstall MySQL Server:
+
+sudo apt-get remove --purge mysql-server mysql-client mysql-common
+
+Remove Dependencies: After removing MySQL, you might want to remove unused dependencies.
+
+sudo apt-get autoremove
+
+Delete MySQL Files: This step removes all MySQL data and configuration files.
+
+sudo rm -rf /etc/mysql /var/lib/mysql
+sudo apt-get purge mysql-server-core-* mysql-client-core-*
+
+3. Uninstalling MySQL Client
+If you also installed the MySQL client separately, you can remove it using:
+
+sudo apt-get remove --purge mysql-client
+
+4. Clean Up
+After uninstallation, you might want to remove residual package data.
+
+sudo apt-get autoremove
+sudo apt-get autoclean
+
+5. Check for Active MySQL Processes (Optional)
+After uninstallation, you can check if any MySQL processes are still running:
+
+ps -A | grep mysql
+
+If you see any MySQL processes, you can kill them using their process ID (PID):
+
+sudo kill -9 [PID]
