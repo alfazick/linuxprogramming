@@ -20,10 +20,12 @@
 
 **10 FileSystemsBasics -> Ready**
 
+**11 Processes and Services -> Ready**
+
 **12 Encryption and Decryption -> Ready**
 
 **13 Hashing -> Ready**
 
-**14 Processes and Services -> In-progress**
+**14 Networks:Ports -> In-progress**
 
 
