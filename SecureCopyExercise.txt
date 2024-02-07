@@ -1,0 +1,54 @@
+=> Practical Guide to Secure File Transfers
+
+Access Credentials: Prepare the server's address, 
+SSH port (in this example, we're using port 5031), and a user account with 
+required permissions.
+
+
+Part 1: Server-to-Local File Transfer
+Step 1: Connect to the Server
+Initiate an SSH connection to your remote server:
+
+ssh -p 5031 student@xxxx.eastus.cloudapp.azure.com
+Step 2: Create a Test File on the Server
+Once connected, create a sample file to use for the transfer:
+
+echo "Hello from the cloud!" > message.txt
+To verify the file's content, use:
+
+cat message.txt
+Disconnect from the server after this step.
+
+Step 3: Securely Transfer the File to the Local Machine
+On your local machine, run:
+
+scp -P 5031 student@xxxx.eastus.cloudapp.azure.com:message.txt /local/directory/path
+Note: The -P flag specifies the port number used for the connection, 
+essential when the remote server uses a port other than the default SSH port. 
+The colon (:) is required to denote the path to the file or directory on the remote server.
+
+Part 2: Local-to-Server File Transfer
+
+Step 1: Update the File Locally
+Edit the received file to include additional text:
+echo "Acknowledged from the local machine." >> /local/directory/path/message.txt
+
+
+Step 2: Transfer the Updated File Back to the Server
+
+Use SCP to send the modified file back to the remote server:
+scp -P 5031 /local/directory/path/message.txt student@xxxx.eastus.cloudapp.azure.com:/remote/directory/path
+
+
+Part 3: Verification
+Step 1: SSH into the Remote Server
+Reconnect to the server using SSH:
+
+ssh -p 5031 student@xxxx.eastus.cloudapp.azure.com
+
+
+Step 2: Verify the File Content
+Check the content of the transferred file:
+
+cat /remote/directory/path/message.txt
+You should see the updated text in the file, confirming a successful transfer.
