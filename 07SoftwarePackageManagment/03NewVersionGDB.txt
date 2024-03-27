@@ -1,0 +1,146 @@
+
+Lab Exercise: Installing and Utilizing GDB
+Objective:
+Part#1 Learn how to download, compile, and install GDB from source. 
+Lab Part #1 Do it at home. Compiling whole project is time consuming.
+
+Part#2 Utilize GDB to debug a simple C program.
+
+Prerequisites:
+Basic knowledge of Linux command-line tools.
+Basic understanding of C programming.
+A Linux system with development tools like clang, make, wget, or curl.
+Lab Overview:
+Downloading GDB Source Code
+Compiling and Installing GDB
+Configuring GDB
+Basic Debugging with GDB
+1. Downloading GDB Source Code
+Objective: Securely download the latest version of GDB.
+
+Task: Use wget or curl to download the GDB source code.
+
+wget http://sourceware.org/pub/gdb/releases/gdb-10.1.tar.xz
+# or
+curl -O http://sourceware.org/pub/gdb/releases/gdb-10.1.tar.xz
+
+2. Compiling and Installing GDB
+Objective: Compile GDB from the downloaded source and install it on the system.
+
+Task A: Extract the source code
+
+tar -xvf gdb-10.1.tar.xz
+cd gdb-10.1
+Task B: Compile and Install
+
+./configure
+make
+sudo make install
+
+3. Configuring GDB
+Objective: Ensure GDB is correctly installed and ready to use.
+
+Task: Verify the installation by checking the version of GDB.
+
+gdb --version
+
+Part# 2
+We do regular installation of gdb and clang
+sudo apt install gdb
+sudo apt install clang
+
+confirm by running
+which gdb
+which clang
+or 
+gdb --version 
+clang --version 
+
+
+asic Debugging with GDB
+Objective:
+Utilize GDB to identify and fix a bug in a simple C program.
+
+Background:
+A segmentation fault occurs when a program attempts to access a memory location that it's not allowed to access, or attempts to access a memory location in a way that is not allowed (for example, trying to write to a read-only location, or to overwrite part of the operating system).
+
+Task: Debugging a Program with GDB
+Write the Program
+
+First, create a file named example.c using a text editor like nano. 
+Here's a simple program that will intentionally cause a segmentation fault:
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    char *ptr = "hello world";
+    printf("%s\n", ptr);
+    ptr[0] = 'H'; // Attempt to modify a string literal, undefined behavior
+    printf("%s\n", ptr);
+    return 0;
+}
+
+This program attempts to modify a string literal, 
+which is stored in read-only memory, leading to undefined behavior and a segmentation fault.
+
+Compile the Program with Debugging Information
+Compile the program with -g option to include debugging information:
+clang -g example.c -o example
+or 
+gcc -g example.c -o example
+
+
+Start GDB
+
+Start GDB with your program:
+
+gdb ./example
+
+
+Set a Breakpoint
+
+Before running the program, set a breakpoint at main function to start debugging:
+
+(gdb) break main
+
+Run the Program
+
+Now, run the program within GDB:
+
+(gdb) run
+The program will start and stop at the breakpoint you set, 
+allowing you to inspect the state before it crashes.
+
+Step Through the Code
+
+Use the next command to execute the next line of code 
+without stepping into functions:
+
+(gdb) next
+Continue using next until you reach the line that modifies the string literal. 
+GDB will let you step over it, but when you proceed, the program will crash.
+
+Identify the Problem
+
+GDB will report a segmentation fault. 
+At this point, you can inspect the variables and the line that caused the fault:
+
+(gdb) list
+The list command shows the part of the source code being executed. 
+The line attempting to modify the string literal is the culprit.
+
+Fixing the Bug
+Exit GDB (type quit) and modify example.c 
+to avoid modifying a string literal. 
+One way to fix the bug is to change the string declaration 
+to use an array so it's modifiable:
+
+char ptr[] = "hello world";
+
+Recompile and rerun your program in GDB to verify the fix.
+
+Lab Summary:
+You've learned how to use GDB to debug a C program 
+By setting breakpoints,
+Stepping through the code, and inspecting variables. 
