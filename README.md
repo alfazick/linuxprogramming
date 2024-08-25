@@ -26,6 +26,6 @@
 
 **13 Hashing -> Ready**
 
-**14 Networks:Ports -> In-progress**
+**14 GIT -> Ready -> https://github.com/alfazick/gitpractice**
 
 
