@@ -96,8 +96,10 @@ To use this Python example:
 
 # Multiple messages Canonical Producer Consumer Pattern
 #### Python code
+
+```python  
 # writer.py
-'''python import os
+import os
 
 # Open the named pipe in write mode
 f = open("my_pipe", "w")
@@ -138,6 +140,6 @@ try:
             time.sleep(1)  # This prevents the loop from running too fast
 finally:
     f.close()
-
+```
 
 These examples demonstrate how character devices, pipes, and named pipes in Linux can be interacted with as if they were files, both through shell commands and Python code. This illustrates the "Everything is a File" philosophy in Linux, where even these specialized system features are accessed through a consistent file-like interface.
