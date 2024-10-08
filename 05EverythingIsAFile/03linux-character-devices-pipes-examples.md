@@ -91,8 +91,53 @@ os.remove("my_pipe")
 ```
 
 To use this Python example:
-1. Run the reader script in one terminal: `python reader.py`
-2. Run the writer script in another terminal: `python writer.py`
+1. Run the writer script in another terminal: `python writer.py`
+2. Run the reader script in one terminal: `python reader.py`
+
+# Multiple messages Canonical Producer Consumer Pattern
+#### Python code
+# writer.py
+'''python import os
+
+# Open the named pipe in write mode
+f = open("my_pipe", "w")
+
+try:
+    while True:
+        # Get the message from the user
+        message = input("Enter message to send (type 'exit' to quit): ")
+        if message == 'exit':
+            # Send the "stop" message before exiting
+            f.write("stop\n")
+            f.flush()  # Ensure the "stop" message is sent immediately
+            break
+        # Write the message to the pipe
+        f.write(message + "\n")
+        f.flush()  # Ensure the message is sent immediately
+finally:
+    f.close()
+
+# reader.py
+import os
+import time
+
+# Open the named pipe in read mode
+f = open("my_pipe", "r")
+
+try:
+    while True:
+        # Read a message from the pipe
+        message = f.readline().strip()  # Read one line at a time
+        if message:
+            print("Received:", message)
+            if message == 'exit':
+                print("Exit message received. Stopping the reader.")
+                break
+        else:
+            # If no message is received, wait for a bit before checking again
+            time.sleep(1)  # This prevents the loop from running too fast
+finally:
+    f.close()
 
 
 These examples demonstrate how character devices, pipes, and named pipes in Linux can be interacted with as if they were files, both through shell commands and Python code. This illustrates the "Everything is a File" philosophy in Linux, where even these specialized system features are accessed through a consistent file-like interface.
