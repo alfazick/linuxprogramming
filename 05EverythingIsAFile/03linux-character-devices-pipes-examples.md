@@ -49,17 +49,6 @@ Pipes allow the output of one process to be used as input to another process.
 ls -l | grep ".txt"
 ```
 
-#### Python Code:
-```python
-import subprocess
-
-ls_process = subprocess.Popen(["ls", "-l"], stdout=subprocess.PIPE)
-grep_process = subprocess.Popen(["grep", ".txt"], stdin=ls_process.stdout, stdout=subprocess.PIPE)
-ls_process.stdout.close()
-
-output, _ = grep_process.communicate()
-print(output.decode())
-```
 
 ## 3. Named Pipes (FIFOs)
 
@@ -80,7 +69,6 @@ cat < my_pipe
 #### Python Code:
 ```python
 import os
-import time
 
 # Create the named pipe
 os.mkfifo("my_pipe")
@@ -90,7 +78,9 @@ f = open("my_pipe", "w")
 f.write("Hello from the named pipe!")
 f.close()
 
+
 # In another Python script (reader.py)
+import os
 f = open("my_pipe", "r")
 message = f.read()
 print("Received:", message)
@@ -104,36 +94,5 @@ To use this Python example:
 1. Run the reader script in one terminal: `python reader.py`
 2. Run the writer script in another terminal: `python writer.py`
 
-
-#### Python Code:
-```python
-import os
-import time
-
-# Ensure the pipe doesn't exist
-if os.path.exists("my_pipe"):
-    os.remove("my_pipe")
-
-# Create the named pipe
-os.mkfifo("my_pipe")
-
-# Fork the process
-pid = os.fork()
-
-if pid == 0:  # Child process (reader)
-    f = open("my_pipe", "r")
-    message = f.read()
-    print("Child received:", message)
-    f.close()
-else:  # Parent process (writer)
-    time.sleep(1)  # Ensure the child is ready to read
-    f = open("my_pipe", "w")
-    f.write("Hello from parent!")
-    f.close()
-    os.waitpid(pid, 0)  # Wait for child to finish
-
-# Clean up
-os.remove("my_pipe")
-```
 
 These examples demonstrate how character devices, pipes, and named pipes in Linux can be interacted with as if they were files, both through shell commands and Python code. This illustrates the "Everything is a File" philosophy in Linux, where even these specialized system features are accessed through a consistent file-like interface.
