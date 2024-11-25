@@ -28,4 +28,5 @@
 
 **14 GIT -> Ready -> https://github.com/alfazick/gitpractice**
 
+**15 LLM Practice > Ready -> https://github.com/alfazick/llm-locally**
 
