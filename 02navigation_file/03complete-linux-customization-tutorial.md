@@ -86,6 +86,7 @@ Steps:
 
 ## Part 3: Advanced Bash Prompt Customization
 
+
 In this part, we'll customize the bash prompt using a script from Jess Fraz's dotfiles and add a time display.
 
 Steps:
