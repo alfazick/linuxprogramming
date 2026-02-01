@@ -1,0 +1,91 @@
+
+Listen
+
+Big Picture.
+Before diving in Linux, we need to discuss couple of things, or try to understand
+why exactly things, happens to be end up like that.
+# === > Typical Computer System Architecture
+* Physical Level -Computing machine (CPU,RAM,Memory,Devices)
+* OS Level - Kernell(Mother of all programs, which controls who can access what), other programs refered usually as processes(or daemons)
+* Program(Process,Job) - some program which can be written by person, which performs his own specific logic tailored to specific task
+* End-User - person who communicates with program to accomplish task.
+
+# => Typical Workflow Example + Fundamental to understanding how to interact effectively with a Linux-like shell.
+Pre-requisites
+Before starting, make sure you have g++ installed on your Ubuntu system. If it's not installed, you can install it by running the following command:
+sudo apt update
+sudo apt install build-essential
+
+# Version 1: Simple Hello World Program
+Create the File: Open your terminal and type the following command to create a new C++ file:
+touch hello.cpp
+Edit the File: Open the file using a text editor like nano or vim.
+For this example, we'll use nano:
+nano hello.cpp
+Add Code: Enter the following C++ code to print "Hello, world!":
+#include <iostream>
+int main() {
+std::cout << "Hello, world!" << std::endl;
+return 0;
+}
+Save the file and exit the editor.
+Compile the Code: Compile the C++ code using g++:
+g++ hello.cpp -o hello
+Run the Program: After compilation, run the program:
+./hello
+You should see Hello, world! printed on the terminal.
+# Version 2: Accepts Name as Argument
+Modify your hello.cpp to look like this:
+#include <iostream>
+int main(int argc, char *argv[]) {
+if (argc > 1) {
+std::cout << "Hello, " << argv[1] << "!" << std::endl;
+} else {
+std::cout << "Hello, world!" << std::endl;
+}
+return 0;
+}
+Compile and run it as before. You can now run it with a name argument:
+./hello Alice
+This should print Hello, Alice!.
+# Version 3: Optional Flag for Capitalization
+Modify your hello.cpp to look like this:
+#include <iostream>
+#include <string>
+#include <algorithm>
+int main(int argc, char *argv[]) {
+std::string greeting = "Hello, world!";
+if (argc > 1) {
+greeting = "Hello, " + std::string(argv[1]) + "!";
+}
+if (argc > 2 && std::string(argv[2]) == "--capitalize") {
+std::transform(greeting.begin(), greeting.end(), greeting.begin(), ::toupper);
+}
+std::cout << greeting << std::endl;
+return 0;
+}
+Compile and run as before:
+g++ hello.cpp -o hello
+./hello Alice --capitalize
+This should print HELLO, ALICE!.
+=> Most critical Point to observe:
+Understanding this will make you life much more easier
+In Unix-like operating systems such as Linux, the shell is essentially a user interface for running programs. Most of these programs are often small utilities written in C or other languages, each designed to do a specific task very well. (there are like 1000+ programs)
+* Command Line Syntax
+When you type a command in the shell, the typical syntax is:
+command [arguments] [options/flags]
+Command: This is usually the name of the program you want to run.
+Arguments: These are positional parameters that the command needs to execute.
+Options/Flags: These are optional and are used to modify the behavior of the command. They usually start with a hyphen.
+
+
+
+# C++ example beautifully mirrors this structure:
+Command: When you run ./hello, ./hello is the command you're executing, similar to commands like ls.
+Arguments: Alice in ./hello Alice is an argument, just like the filenames you would provide to a command like cp.
+Options/Flags: --capitalize in ./hello Alice --capitalize is an optional flag that modifies how the command behaves.
+Understanding this structure is fundamental to understanding how to interact effectively with a Unix-like shell, and your C++ program serves as a wonderful hands-on example to illustrate these concepts.
+# Basically that's it that's whole Linux programming in essence :)
+I am joking, but it's no far from the truth.
+So for the rest of semester we are going to explore and practice most commands(programs) and patterns which you most likely you are going to encounter in future jobs.
+
